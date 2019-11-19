@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.sql.Time;
 import java.util.ArrayList;
@@ -62,21 +63,21 @@ public class Consulta extends AppCompatActivity {
     }
 
     private List<ConsultaModel> todasConsultas() {
-        return new ArrayList<ConsultaModel>(Arrays.asList(
-                new ConsultaModel(todosHorarios(),new Date("12/04/2019")),
-                new ConsultaModel(todosHorarios(),new Date("09/08/2019")),
-                new ConsultaModel(todosHorarios(),new Date("01/01/2019")),
-                new ConsultaModel(todosHorarios(),new Date("29/02/2019"))
+        return new ArrayList<>(Arrays.asList(
+                new ConsultaModel(todosHorarios(), new Date("12/04/2019")),
+                new ConsultaModel(todosHorarios(), new Date("09/08/2019")),
+                new ConsultaModel(todosHorarios(), new Date("01/01/2019")),
+                new ConsultaModel(todosHorarios(), new Date("12/02/2019"))
         ));
     }
 
 
     private List<Horario> todosHorarios(){
         Random r = new Random();
-        return new ArrayList<Horario>(Arrays.asList(
-           new Horario("Rua Joaquim Moraes",new Time(r.nextInt())),
-           new Horario("Rua Vital Brasil",new Time(r.nextInt())),
-           new Horario("Rua dos Bobos",new Time(r.nextInt()))
+        return new ArrayList<>(Arrays.asList(
+                new Horario("Rua Joaquim Moraes", new Time(r.nextInt())),
+                new Horario("Rua Vital Brasil", new Time(r.nextInt())),
+                new Horario("Rua dos Bobos", new Time(r.nextInt()))
         ));
     }
 

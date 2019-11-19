@@ -4,6 +4,11 @@ import android.media.Image;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.Serializable;
 
@@ -26,6 +31,27 @@ public class Usuario implements Parcelable {
         this.senha = senha;
         this.tipo = tipo;
     }
+
+    protected Usuario(Parcel in) {
+        id = in.readString();
+        foto = in.readParcelable(Uri.class.getClassLoader());
+        nome = in.readString();
+        email = in.readString();
+        senha = in.readString();
+        tipo = in.readString();
+    }
+
+    public static final Creator<Usuario> CREATOR = new Creator<Usuario>() {
+        @Override
+        public Usuario createFromParcel(Parcel in) {
+            return new Usuario(in);
+        }
+
+        @Override
+        public Usuario[] newArray(int size) {
+            return new Usuario[size];
+        }
+    };
 
     public String getTipo() {
         return tipo;
@@ -78,6 +104,24 @@ public class Usuario implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeParcelable(foto, flags);
+        dest.writeString(nome);
+        dest.writeString(email);
+        dest.writeString(senha);
+        dest.writeString(tipo);
+    }
 
+    public JSONObject array() {
+        JSONObject array = new JSONObject();
+        try {
+            array.put("fullname", nome);
+            array.put("email", email);
+            array.put("password", senha);
+            array.put("type", tipo);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return array;
     }
 }

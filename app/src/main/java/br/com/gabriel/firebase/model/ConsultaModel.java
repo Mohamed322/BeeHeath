@@ -1,9 +1,6 @@
 package br.com.gabriel.firebase.model;
 
-import androidx.annotation.NonNull;
-
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +28,10 @@ public class ConsultaModel implements Serializable {
 
     public void setData(Date data) {
         this.data = data;
+    }
+
+    public int getHorario(){
+        return horarios.size();
     }
 
 }

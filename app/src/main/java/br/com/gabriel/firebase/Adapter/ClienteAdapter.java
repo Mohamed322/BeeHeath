@@ -75,16 +75,13 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ViewHold
             img = itemView.findViewById(R.id.foto);
 
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (dados.size() > 0) {
+            itemView.setOnClickListener(v -> {
+                if (dados.size() > 0) {
 
-                        NutricionistaModel nutricionistaModel = dados.get(getLayoutPosition());
-                        Intent intent = new Intent(context, PerfilNutricionista.class);
-                        intent.putExtra("Nutri", nutricionistaModel);
-                        context.startActivity(intent);
-                    }
+                    NutricionistaModel nutricionistaModel = dados.get(getLayoutPosition());
+                    Intent intent = new Intent(context, PerfilNutricionista.class);
+                    intent.putExtra("Nutri", nutricionistaModel);
+                    context.startActivity(intent);
                 }
             });
         }

@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private SignInButton btnSingIn;
     private FirebaseAuth mFirebaseAuth;
     private GoogleApiClient mGoogleApiClient;
+    private Usuario user;
 
 
     @Override
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         } else {
             if (login.getText().toString().equals("admin")) {
                 if (senha.getText().toString().equals("admin")) {
-                    entrar();
+                    entrar(null);
                 } else {
                     alert("Senha Incorreta");
                 }
@@ -107,9 +108,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
     }
 
-    private void entrar() {
+    private void entrar(Usuario user) {
         Intent intent = new Intent(this, Menu.class);
-        intent.putExtra();
+        intent.putExtra("Usuario",user);
         startActivity(intent);
     }
 
@@ -144,14 +145,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private void firebaseLogin(GoogleSignInAccount account) {
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         mFirebaseAuth.signInWithCredential(credential)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            entrar();
-                        } else {
-                            alert("Falha na autenticação");
-                        }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        user = new Usuario(account.getPhotoUrl(),account.getDisplayName(),
+                                account.getEmail(),account.getId(),"Pacient");
+                        alert(user.getNome());
+                        entrar(user);
+
+                    } else {
+                        alert("Falha na autenticação");
                     }
                 });
     }

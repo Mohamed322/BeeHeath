@@ -8,11 +8,29 @@
     tools:context=".Menu"
     tools:ignore="ExtraText">
 
+    <EditText
+        android:id="@+id/Busca"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:drawableRight="@drawable/ic_search_black_24dp"
+        android:hint="@string/Pesquisa"/>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lstDados"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="116dp"
-        tools:layout_editor_absoluteY="4dp" />
+        tools:layout_editor_absoluteY="4dp"
+        />
+    <TextView
+        android:id="@+id/Vazio"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="@string/no_data_available" />
+
 </LinearLayout>

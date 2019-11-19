@@ -1,19 +1,21 @@
 package br.com.gabriel.firebase.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DateFormat;
 import java.util.List;
 
+import br.com.gabriel.firebase.MarcarConsulta;
 import br.com.gabriel.firebase.R;
 import br.com.gabriel.firebase.model.ConsultaModel;
 
@@ -43,14 +45,12 @@ public class ConsutaAdapter extends RecyclerView.Adapter<ConsutaAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolderCliente holder, int position) {
-        ArrayAdapter adapter;
         if (dados != null && dados.size() > 0) {
             ConsultaModel consulta = dados.get(position);
 
             //Passando os dados para a View
-            holder.txtDataConsulta.setText(consulta.getData().toString());
-            adapter = new ArrayAdapter<>(view.getContext(),android.R.layout.simple_list_item_1,consulta.getHorarios());
-            holder.lista.setAdapter(adapter);
+            holder.txtDataConsulta.setText(DateFormat.getDateInstance().format(consulta.getData()));
+            holder.txtNConsulta.setText("vagas: "+consulta.getHorario() + " ");
         }
     }
 
@@ -63,23 +63,20 @@ public class ConsutaAdapter extends RecyclerView.Adapter<ConsutaAdapter.ViewHold
     public class ViewHolderCliente extends RecyclerView.ViewHolder {
 
         public TextView txtDataConsulta;
-        public ListView lista;
-
+        public TextView txtNConsulta;
 
         public ViewHolderCliente(@NonNull View itemView, final Context context) {
             super(itemView);
 
             //Passando o TextView de referencia
             txtDataConsulta = itemView.findViewById(R.id.txtDataConsulta);
-            lista = itemView.findViewById(R.id.consultaList);
+            txtNConsulta = itemView.findViewById(R.id.txtNConsulta);
 
             itemView.setOnClickListener(v -> {
                 if (dados.size() > 0) {
+                    Intent i = new Intent(view.getContext(), MarcarConsulta.class);
+                    view.getContext().startActivity(i);
                     Toast.makeText(context,"Marcar conslta",Toast.LENGTH_LONG).show();
-                    /*ConsultaModel consulta = dados.get(getLayoutPosition());
-                    Intent intent = new Intent(context, PerfilNutricionista.class);
-                    intent.putExtra("Nutri", consulta);
-                    context.startActivity(intent);*/
                 }
             });
         }

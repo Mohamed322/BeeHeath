@@ -11,18 +11,25 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.List;
+
+import br.com.gabriel.firebase.Adapter.ClienteAdapter;
 import br.com.gabriel.firebase.R;
+import br.com.gabriel.firebase.model.NutricionistaModel;
 import br.com.gabriel.firebase.model.Usuario;
 
 public class FavFragmento extends Fragment {
 
-    private ImageView favFoto;
-    private TextView favNome, favEmail;
+    private RecyclerView favRecycler;
     private View view;
     private Usuario user;
+    private RecyclerView lstDados;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -34,20 +41,29 @@ public class FavFragmento extends Fragment {
             user = bundle.getParcelable("Usuario");
             exibirDados();
         }catch (Exception e){
-            Toast.makeText(view.getContext(),"Erro na exbição\n"+e.toString(),Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(),"Erro na exbição\n"+e.toString(),Toast.LENGTH_LONG).show();
         }
         return view;
     }
     private void exibirDados() {
-        favNome.setText(user.getNome());
-        favEmail.setText(user.getSenha());
 
-        Glide.with(view.getContext()).load(user.getFoto()).into(favFoto);
     }
 
     private void iniciaComponentes() {
-        favFoto = view.findViewById(R.id.favFoto);
-        favNome = view.findViewById(R.id.favNome);
-        favEmail = view.findViewById(R.id.favEmail);
+        favRecycler = view.findViewById(R.id.favRecicler);
+    }
+
+    private void iniciaRecyclerView(List<NutricionistaModel> dados) {
+
+        //Criação do LayoutManager
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        lstDados.setLayoutManager(linearLayoutManager);
+
+        //Passando para o adapter
+        ClienteAdapter clienteAdapter = new ClienteAdapter(dados);
+
+        //Setando na tela
+        lstDados.setAdapter(clienteAdapter);
+
     }
 }
