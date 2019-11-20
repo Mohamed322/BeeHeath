@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class NutricionistaModel implements Serializable {
 
-    private String id;
+    private int id;
     private int foto;
     private String nome;
     private String endereco;
@@ -17,7 +17,7 @@ public class NutricionistaModel implements Serializable {
     private String especialiacao;
 
 
-    public NutricionistaModel(String id, int foto, String nome, String endereco,
+    public NutricionistaModel(int id, int foto, String nome, String endereco,
                               String email, String telefone, String especialiacao) {
 
         this.id = id;
@@ -30,11 +30,11 @@ public class NutricionistaModel implements Serializable {
     }
 
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

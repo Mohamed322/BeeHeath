@@ -53,11 +53,11 @@ public class Register extends AppCompatActivity {
                 if (senha.length() > 0) {
                     usuario.setSenha(senha.getText().toString());
                     if (paciente.isChecked()) {
-                        usuario.setTipo("Paciente");
+                        usuario.setTipo("patient");
                         enviaApi(usuario);
 
                     } else if (nutricionista.isChecked()) {
-                        usuario.setTipo("Nutricinista");
+                        usuario.setTipo("nutritionist");
                         enviaApi(usuario);
                     } else {
                         Toast.makeText(this, "Selecione o tipo de usuario", Toast.LENGTH_SHORT).show();
@@ -79,10 +79,12 @@ public class Register extends AppCompatActivity {
     }
 
     public void enviaApi(Usuario user){
-        String url = getString(R.string.web_service_url) + "/user/register";
+        String url = getString(
+                R.string.web_service_url
+                );
         JsonObjectRequest req = new JsonObjectRequest(
                 Request.Method.POST,
-                url,
+                getString(R.string.web_service_url),
                 user.array(),
                 (resultado) ->{
                     Toast.makeText(this,"Sucesso\n"+resultado,Toast.LENGTH_LONG).show();

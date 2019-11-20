@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,13 +12,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
-import br.com.gabriel.firebase.Adapter.ClienteAdapter;
+import br.com.gabriel.firebase.Adapter.ListaConsultasAdapter;
 import br.com.gabriel.firebase.R;
-import br.com.gabriel.firebase.model.NutricionistaModel;
+import br.com.gabriel.firebase.model.ConsultaMarcada;
 import br.com.gabriel.firebase.model.Usuario;
 
 public class FavFragmento extends Fragment {
@@ -28,7 +27,6 @@ public class FavFragmento extends Fragment {
     private RecyclerView favRecycler;
     private View view;
     private Usuario user;
-    private RecyclerView lstDados;
 
     @Nullable
     @Override
@@ -39,31 +37,40 @@ public class FavFragmento extends Fragment {
             Bundle bundle = getArguments();
             assert bundle != null;
             user = bundle.getParcelable("Usuario");
-            exibirDados();
+
         }catch (Exception e){
             Toast.makeText(getContext(),"Erro na exbição\n"+e.toString(),Toast.LENGTH_LONG).show();
+
         }
+        exibirDados();
         return view;
     }
-    private void exibirDados() {
 
+    private void exibirDados() {
+        iniciaRecyclerView(todasConsultasMarcadas());
+    }
+
+    private ArrayList todasConsultasMarcadas(){
+        return new ArrayList<ConsultaMarcada>(Arrays.asList(
+                new ConsultaMarcada(new Date(),"Douglas","Rua Martinho Claro","12:12"),
+                new ConsultaMarcada(new Date(),"Marcelo","Rua Martinho Claro","15:25")
+                ));
     }
 
     private void iniciaComponentes() {
         favRecycler = view.findViewById(R.id.favRecicler);
     }
 
-    private void iniciaRecyclerView(List<NutricionistaModel> dados) {
+    private void iniciaRecyclerView(List<ConsultaMarcada> dados) {
 
         //Criação do LayoutManager
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        lstDados.setLayoutManager(linearLayoutManager);
+        favRecycler.setLayoutManager(linearLayoutManager);
 
         //Passando para o adapter
-        ClienteAdapter clienteAdapter = new ClienteAdapter(dados);
+        ListaConsultasAdapter listaConsultasAdapter= new ListaConsultasAdapter(dados);
 
         //Setando na tela
-        lstDados.setAdapter(clienteAdapter);
-
+        favRecycler.setAdapter(listaConsultasAdapter);
     }
 }

@@ -64,10 +64,10 @@ public class Consulta extends AppCompatActivity {
 
     private List<ConsultaModel> todasConsultas() {
         return new ArrayList<>(Arrays.asList(
-                new ConsultaModel(todosHorarios(), new Date("12/04/2019")),
-                new ConsultaModel(todosHorarios(), new Date("09/08/2019")),
-                new ConsultaModel(todosHorarios(), new Date("01/01/2019")),
-                new ConsultaModel(todosHorarios(), new Date("12/02/2019"))
+                new ConsultaModel(todosHorarios(), new Date("12/04/2019"),n),
+                new ConsultaModel(todosHorarios(), new Date("09/08/2019"),n),
+                new ConsultaModel(todosHorarios(), new Date("01/01/2019"),n),
+                new ConsultaModel(todosHorarios(), new Date("12/02/2019"),n)
         ));
     }
 

@@ -16,8 +16,10 @@ import java.text.DateFormat;
 import java.util.List;
 
 import br.com.gabriel.firebase.MarcarConsulta;
+import br.com.gabriel.firebase.PerfilNutricionista;
 import br.com.gabriel.firebase.R;
 import br.com.gabriel.firebase.model.ConsultaModel;
+import br.com.gabriel.firebase.model.NutricionistaModel;
 
 public class ConsutaAdapter extends RecyclerView.Adapter<ConsutaAdapter.ViewHolderCliente> {
 
@@ -74,9 +76,12 @@ public class ConsutaAdapter extends RecyclerView.Adapter<ConsutaAdapter.ViewHold
 
             itemView.setOnClickListener(v -> {
                 if (dados.size() > 0) {
-                    Intent i = new Intent(view.getContext(), MarcarConsulta.class);
-                    view.getContext().startActivity(i);
-                    Toast.makeText(context,"Marcar conslta",Toast.LENGTH_LONG).show();
+
+                    ConsultaModel consultaModel = dados.get(getLayoutPosition());
+                    Intent intent = new Intent(context, MarcarConsulta.class);
+                    intent.putExtra("Consulta", consultaModel);
+                    Toast.makeText(context,consultaModel.getData().toString(),Toast.LENGTH_LONG).show();
+                    context.startActivity(intent);
                 }
             });
         }

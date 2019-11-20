@@ -18,12 +18,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -92,23 +97,30 @@ public class ProcFragmento extends Fragment {
         if (palavra.length() > 2) {
 
             dados = enviaApi(palavra);
-            if (dados == null && false){
+        }
+            /*
+            if (dados == null) {
                 vazio.setText(getText(R.string.nEncontrado));
-            }
-            else {
+                Toast.makeText(getContext(), "Deu Ruim", Toast.LENGTH_LONG).show();
+            } else {
                 lstDados.setVisibility(View.VISIBLE);
                 vazio.setVisibility(View.GONE);
-                iniciaRecyclerView(todosOsClientes());
+                try {
+                    iniciaRecyclerView(dados);
+                } catch (Exception e) {
+                    Toast.makeText(getContext(), e.toString(), Toast.LENGTH_LONG).show();
+                }
+
             }
-        }
-        else {
+        } else {
             lstDados.setVisibility(View.GONE);
             vazio.setVisibility(View.VISIBLE);
         }
-
+*/
     }
 
     private void iniciaRecyclerView(List<NutricionistaModel> dados) {
+
 
         //Criação do LayoutManager
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -119,20 +131,41 @@ public class ProcFragmento extends Fragment {
 
         //Setando na tela
         lstDados.setAdapter(clienteAdapter);
-
+        clienteAdapter.notifyDataSetChanged();
+        lstDados.setVisibility(View.VISIBLE);
     }
 
     private List<NutricionistaModel> enviaApi(String palavra) {
-        String url = getString(R.string.web_service_url) + "/nutricionist";
+        String url = getString(R.string.web_service_url) + "nutritionist/";
         requestQueue = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
-        JsonObjectRequest req = new JsonObjectRequest(
-                Request.Method.POST,
+        JsonArrayRequest req = new JsonArrayRequest(
+                Request.Method.GET,
                 url,
                 null,
                 (resultado) -> {
-                    Usuario user = new Usuario();
+                    dados = new ArrayList<>();
+                    try {
+                        user = new Usuario();
+                        JSONObject iesimo;
+                        for (int i = 0; i < resultado.length(); i++) {
+                            iesimo = resultado.getJSONObject(i);
+                            int idUser = iesimo.getInt("iduser");
+                            String email = iesimo.getString("email");
+                            String pwd = iesimo.getString("password");
+                            String name = iesimo.getString("fullname");
+                            String niver = iesimo.getString("birthday");
+                            String tipo = iesimo.getString("type");
+                            String esp = iesimo.getString("specialization");
+                            int crn = iesimo.getInt("crn");
+                            dados.add(new NutricionistaModel(idUser, 0, name, null, email, null, esp));
+                        }
+                        iniciaRecyclerView(dados);
+                    } catch (JSONException e) {
+
+                    }
+                    Toast.makeText(getContext(), resultado.toString(), Toast.LENGTH_LONG).show();
+
                     Toast.makeText(getContext(), "Sucesso\n" + resultado, Toast.LENGTH_LONG).show();
-                    return;
                 },
                 (excecao) -> {
                     Toast.makeText(
@@ -144,22 +177,22 @@ public class ProcFragmento extends Fragment {
                 }
         );
         requestQueue.add(req);
-        return null;
+        return dados;
     }
 
     private List<NutricionistaModel> todosOsClientes() {
         return new ArrayList<>(Arrays.asList(
-                new NutricionistaModel(UUID.randomUUID().toString(), R.drawable.download, "Gabriel", "Vila Santa Catarina",
+                new NutricionistaModel(0, R.drawable.download, "Gabriel", "Vila Santa Catarina",
                         "gsb@gmail.com", "(11)95813-3519", "Cardio"),
-                new NutricionistaModel(UUID.randomUUID().toString(), R.drawable.download, "Douglas", "Heaven",
+                new NutricionistaModel(0, R.drawable.download, "Douglas", "Heaven",
                         "Dougras@gmail.com", "777-777-77", "infanto"),
-                new NutricionistaModel(UUID.randomUUID().toString(), R.drawable.download, "Douglas", "Heaven",
+                new NutricionistaModel(0, R.drawable.download, "Douglas", "Heaven",
                         "Dougras@gmail.com", "777-777-77", "Clinico"),
-                new NutricionistaModel(UUID.randomUUID().toString(), R.drawable.download, "Douglas", "Heaven",
+                new NutricionistaModel(0, R.drawable.download, "Douglas", "Heaven",
                         "Dougras@gmail.com", "777-777-77", "abshdb"),
-                new NutricionistaModel(UUID.randomUUID().toString(), R.drawable.download, "Douglas", "Heaven",
+                new NutricionistaModel(0, R.drawable.download, "Douglas", "Heaven",
                         "Dougras@gmail.com", "777-777-77", "abshdb"),
-                new NutricionistaModel(UUID.randomUUID().toString(), R.drawable.download, "Douglas", "Heaven",
+                new NutricionistaModel(0, R.drawable.download, "Douglas", "Heaven",
                         "Dougras@gmail.com", "777-777-77", "abshdb")
         ));
     }
