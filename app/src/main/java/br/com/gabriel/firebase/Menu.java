@@ -12,6 +12,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import br.com.gabriel.firebase.Fragmentos.FavFragmento;
 import br.com.gabriel.firebase.Fragmentos.HomeFragmento;
 import br.com.gabriel.firebase.Fragmentos.ProcFragmento;
+import br.com.gabriel.firebase.model.Paciente;
 import br.com.gabriel.firebase.model.Usuario;
 
 
@@ -25,11 +26,10 @@ public class Menu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
-        Intent i = new Intent();
         bundle = getIntent().getExtras();
-        Usuario user = bundle.getParcelable("Usuario");
-        Toast.makeText(this,user.getNome(),Toast.LENGTH_LONG).show();
-        bundle.putParcelable("Usuario",user);
+        Paciente user =(Paciente) bundle.getSerializable("Paciente");
+        bundle.putSerializable("Paciente",user);
+        alert(user.getNome());
         navListener = menuItem -> {
             switch (menuItem.getItemId()) {
                 case R.id.Home:

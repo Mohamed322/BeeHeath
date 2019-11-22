@@ -11,7 +11,7 @@
     <string name="Nome">Nome</string>
     <string name="tel">Telefone</string>
     <string name="End">Endereço</string>
-    <string name="busca">Digite o nome do nutricionistaModel</string>
+    <string name="busca">Digite o nome do nutricionista</string>
     <string name="title_activity_menu_lateral">MenuLateral</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -30,10 +30,11 @@
     <string name="LogOut">Sair</string>
     <string name="consulta">Agendar Consulta</string>
     <string name="connect_error">Erro na conexão</string>
-    <string name="web_service_url">https://c1e06517.ngrok.io/</string>
+    <string name="web_service_url">http://52a63989.ngrok.io</string>
     <string name="no_data_available">Busque por um nutricionista</string>
     <string name="nEncontrado">\"Não Encontrado\"</string>
     <string name="Data">Data:</string>
     <string name="Local">Local:</string>
     <string name="ConsultaMarcada">Consultas Marcadas</string>
+    <string name="CRN">CRN</string>
 </resources>

@@ -15,13 +15,13 @@ import java.util.List;
 
 import br.com.gabriel.firebase.PerfilNutricionista;
 import br.com.gabriel.firebase.R;
-import br.com.gabriel.firebase.model.NutricionistaModel;
+import br.com.gabriel.firebase.model.Nutricionista;
 
 public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ViewHolderCliente> {
 
-    private List<NutricionistaModel> dados;
+    private List<Nutricionista> dados;
 
-    public ClienteAdapter(List<NutricionistaModel> dados) {
+    public ClienteAdapter(List<Nutricionista> dados) {
         this.dados = dados;
     }
 
@@ -44,12 +44,12 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ViewHold
     public void onBindViewHolder(@NonNull ClienteAdapter.ViewHolderCliente holder, int position) {
 
         if (dados != null && dados.size() > 0) {
-            NutricionistaModel nutricionistaModel = dados.get(position);
+            Nutricionista nutricionista = dados.get(position);
 
             //Passando os dados para a View
-            holder.textNome.setText(nutricionistaModel.getNome());
-            holder.textEsp.setText(holder.textEsp.getText().toString() + ": " + nutricionistaModel.getEspecialiacao());
-            holder.img.setImageResource(nutricionistaModel.getFoto());;
+            holder.textNome.setText(nutricionista.getNome());
+            holder.textEsp.setText(holder.textEsp.getText().toString() + ": " + nutricionista.getEspecialiacao());
+            holder.img.setImageResource(nutricionista.getFoto());;
 
         }
     }
@@ -78,9 +78,9 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ViewHold
             itemView.setOnClickListener(v -> {
                 if (dados.size() > 0) {
 
-                    NutricionistaModel nutricionistaModel = dados.get(getLayoutPosition());
+                    Nutricionista nutricionista = dados.get(getLayoutPosition());
                     Intent intent = new Intent(context, PerfilNutricionista.class);
-                    intent.putExtra("Nutri", nutricionistaModel);
+                    intent.putExtra("Nutri", nutricionista);
                     context.startActivity(intent);
                 }
             });

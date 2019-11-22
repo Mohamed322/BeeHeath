@@ -16,6 +16,8 @@ import com.android.volley.toolbox.Volley;
 
 import java.util.UUID;
 
+import br.com.gabriel.firebase.model.Nutricionista;
+import br.com.gabriel.firebase.model.Paciente;
 import br.com.gabriel.firebase.model.Usuario;
 
 public class Register extends AppCompatActivity {
@@ -37,28 +39,29 @@ public class Register extends AppCompatActivity {
     }
 
 
-    public void entrar(Usuario usuario) {
+    public void entrar(Paciente paciente) {
         Intent intent = new Intent(this, Menu.class);
-        intent.putExtra("Usuario",usuario);
+        intent.putExtra("Paciente",paciente);
         startActivity(intent);
     }
 
     public void Autenticar(View view) {
-        Usuario usuario = new Usuario();
+
         if (nome.length() > 0) {
-            usuario.setId(UUID.randomUUID().toString());
-            usuario.setNome(nome.getText().toString());
             if (email.length() > 0) {
-                usuario.setEmail(email.getText().toString());
                 if (senha.length() > 0) {
-                    usuario.setSenha(senha.getText().toString());
                     if (paciente.isChecked()) {
-                        usuario.setTipo("patient");
+                        Paciente usuario = new Paciente(nome.getText().toString(),email.getText().toString()
+                                ,senha.getText().toString(),"patient",null);
                         enviaApi(usuario);
 
                     } else if (nutricionista.isChecked()) {
-                        usuario.setTipo("nutritionist");
-                        enviaApi(usuario);
+                        Nutricionista nutricionista = new Nutricionista(nome.getText().toString(),email.getText().toString()
+                                ,senha.getText().toString(),null,0,null);
+                        Intent i = new Intent(this,RegistraNutri.class);
+                        i.putExtra("Nutri",nutricionista);
+                        startActivity(i);
+
                     } else {
                         Toast.makeText(this, "Selecione o tipo de usuario", Toast.LENGTH_SHORT).show();
                         paciente.requestFocus();
@@ -78,17 +81,16 @@ public class Register extends AppCompatActivity {
 
     }
 
-    public void enviaApi(Usuario user){
+    public void enviaApi(Paciente paciente){
         String url = getString(
                 R.string.web_service_url
-                );
+                )+"/user/register/";
         JsonObjectRequest req = new JsonObjectRequest(
                 Request.Method.POST,
-                getString(R.string.web_service_url),
-                user.array(),
+                url,
+                null,
                 (resultado) ->{
-                    Toast.makeText(this,"Sucesso\n"+resultado,Toast.LENGTH_LONG).show();
-                    entrar(user);
+                    entrar(paciente);
                 },
                 (excecao) ->{
                     Toast.makeText(

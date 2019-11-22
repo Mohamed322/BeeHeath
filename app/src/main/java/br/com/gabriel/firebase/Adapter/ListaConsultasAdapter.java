@@ -82,10 +82,10 @@ public class ListaConsultasAdapter extends RecyclerView.Adapter<ListaConsultasAd
                     /*
                     ConsultaMarcada consultaMarcada= dados.get(getLayoutPosition());
                     Intent intent = new Intent(context, PerfilNutricionista.class);
-                    intent.putExtra("Consulta", consultaMarcada);
+                    intent.putExtra("Consultas", consultaMarcada);
                     context.startActivity(intent);
                     */
-                    Toast.makeText(context,"Mostrar Consulta",Toast.LENGTH_LONG).show();
+                    Toast.makeText(context,"Mostrar Consultas",Toast.LENGTH_LONG).show();
                 }
             });
         }

@@ -2,7 +2,6 @@ package br.com.gabriel.firebase;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -10,16 +9,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-
-import br.com.gabriel.firebase.model.ConsultaModel;
+import br.com.gabriel.firebase.model.Consulta;
 import br.com.gabriel.firebase.model.Horario;
 
 public class MarcarConsulta extends AppCompatActivity {
 
     private TextView txtMcData, txtMcEsp,txtMcNutri;
     private ImageView McFoto;
-    private ConsultaModel consultaModel;
+    private Consulta consulta;
     private ListView listView;
 
     @Override
@@ -27,9 +24,9 @@ public class MarcarConsulta extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_marcar_consulta);
         try {
-            consultaModel = (ConsultaModel) getIntent().getParcelableExtra("Consulta");
-            assert consultaModel != null;
-            Toast.makeText(this, consultaModel.getNutricionista().getNome(), Toast.LENGTH_LONG).show();
+            consulta = (Consulta) getIntent().getSerializableExtra("Consultas");
+            assert consulta != null;
+            Toast.makeText(this, consulta.getNutricionista().getNome(), Toast.LENGTH_LONG).show();
             iniciarComponentes();
             setarValores();
         }catch (Exception e){
@@ -38,11 +35,12 @@ public class MarcarConsulta extends AppCompatActivity {
     }
 
     public void setarValores() {
-        McFoto.setImageResource(consultaModel.getNutricionista().getFoto());
-        txtMcNutri.setText(txtMcNutri.getText() + consultaModel.getNutricionista().getNome());
-        txtMcEsp.setText(txtMcEsp.getText() + consultaModel.getNutricionista().getEspecialiacao());
-        txtMcData.setText(txtMcEsp.getText() + consultaModel.getData().toString());
-        ArrayAdapter<Horario> adapter = new ArrayAdapter<Horario>(this, android.R.layout.simple_list_item_1, consultaModel.getHorarios());
+        McFoto.setImageResource(consulta.getNutricionista().getFoto());
+        txtMcNutri.setText(txtMcNutri.getText() +":"+ consulta.getNutricionista().getNome());
+        txtMcEsp.setText(txtMcEsp.getText() + ":"+consulta.getNutricionista().getEspecialiacao());
+        txtMcData.setText(consulta.getData().toString());
+
+        ArrayAdapter<Horario> adapter = new ArrayAdapter<Horario>(this, android.R.layout.simple_list_item_1, consulta.getHorarios());
         listView.setAdapter(adapter);
     }
 

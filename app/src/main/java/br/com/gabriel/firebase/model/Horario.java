@@ -1,13 +1,12 @@
 package br.com.gabriel.firebase.model;
 
 import android.os.Parcel;
-import android.os.Parcelable;
-
 import androidx.annotation.NonNull;
 
+import java.io.Serializable;
 import java.sql.Time;
 
-public class Horario  implements Parcelable {
+public class Horario  implements Serializable {
 
     private String local;
     private Time horario;
@@ -22,17 +21,6 @@ public class Horario  implements Parcelable {
         local = in.readString();
     }
 
-    public static final Creator<Horario> CREATOR = new Creator<Horario>() {
-        @Override
-        public Horario createFromParcel(Parcel in) {
-            return new Horario(in);
-        }
-
-        @Override
-        public Horario[] newArray(int size) {
-            return new Horario[size];
-        }
-    };
 
     public String getLocal() {
         return local;
@@ -53,16 +41,8 @@ public class Horario  implements Parcelable {
     @NonNull
     @Override
     public String toString() {
-        return "Horario: "+ horario + "\nLocal: " + local;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(local);
+        return "Horario: " + horario + "\nLocal: " + local;
     }
 }
+
+

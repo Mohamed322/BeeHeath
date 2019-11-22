@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,17 +15,15 @@ import java.text.DateFormat;
 import java.util.List;
 
 import br.com.gabriel.firebase.MarcarConsulta;
-import br.com.gabriel.firebase.PerfilNutricionista;
 import br.com.gabriel.firebase.R;
-import br.com.gabriel.firebase.model.ConsultaModel;
-import br.com.gabriel.firebase.model.NutricionistaModel;
+import br.com.gabriel.firebase.model.Consulta;
 
 public class ConsutaAdapter extends RecyclerView.Adapter<ConsutaAdapter.ViewHolderCliente> {
 
-    private List<ConsultaModel> dados;
+    private List<Consulta> dados;
     private View view;
 
-    public ConsutaAdapter(List<ConsultaModel> dados) {
+    public ConsutaAdapter(List<Consulta> dados) {
         this.dados = dados;
     }
 
@@ -48,7 +45,7 @@ public class ConsutaAdapter extends RecyclerView.Adapter<ConsutaAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolderCliente holder, int position) {
         if (dados != null && dados.size() > 0) {
-            ConsultaModel consulta = dados.get(position);
+            Consulta consulta = dados.get(position);
 
             //Passando os dados para a View
             holder.txtDataConsulta.setText(DateFormat.getDateInstance().format(consulta.getData()));
@@ -77,10 +74,10 @@ public class ConsutaAdapter extends RecyclerView.Adapter<ConsutaAdapter.ViewHold
             itemView.setOnClickListener(v -> {
                 if (dados.size() > 0) {
 
-                    ConsultaModel consultaModel = dados.get(getLayoutPosition());
+                    Consulta consulta = dados.get(getLayoutPosition());
                     Intent intent = new Intent(context, MarcarConsulta.class);
-                    intent.putExtra("Consulta", consultaModel);
-                    Toast.makeText(context,consultaModel.getData().toString(),Toast.LENGTH_LONG).show();
+                    intent.putExtra("Consultas", consulta);
+                    Toast.makeText(context, consulta.getData().toString(),Toast.LENGTH_LONG).show();
                     context.startActivity(intent);
                 }
             });

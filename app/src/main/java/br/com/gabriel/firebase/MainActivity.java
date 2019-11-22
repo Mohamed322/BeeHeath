@@ -1,8 +1,6 @@
 package br.com.gabriel.firebase;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -19,17 +17,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import br.com.gabriel.firebase.model.Usuario;
+import br.com.gabriel.firebase.model.Paciente;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
@@ -38,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private SignInButton btnSingIn;
     private FirebaseAuth mFirebaseAuth;
     private GoogleApiClient mGoogleApiClient;
-    private Usuario user;
 
 
     @Override
@@ -108,9 +99,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
     }
 
-    private void entrar(Usuario user) {
+    private void entrar(Paciente user) {
         Intent intent = new Intent(this, Menu.class);
-        intent.putExtra("Usuario",user);
+        intent.putExtra("Paciente",user);
         startActivity(intent);
     }
 
@@ -147,11 +138,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         mFirebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        user = new Usuario(account.getPhotoUrl(),account.getDisplayName(),
-                                account.getEmail(),account.getId(),"Pacient");
-                        alert(user.getNome());
-                        entrar(user);
-
+                        Paciente paciente = new Paciente(account.getDisplayName(),
+                                account.getEmail(),account.getId(),"Pacient",null);
+                        entrar(paciente);
                     } else {
                         alert("Falha na autenticação");
                     }

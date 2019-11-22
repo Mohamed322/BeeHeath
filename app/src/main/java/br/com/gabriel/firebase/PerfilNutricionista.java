@@ -10,12 +10,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import br.com.gabriel.firebase.model.NutricionistaModel;
+import br.com.gabriel.firebase.model.Nutricionista;
 
 public class PerfilNutricionista extends AppCompatActivity {
     private ImageView foto;
-    private TextView nome, espec, emal, ender, tel;
-    private NutricionistaModel n;
+    private TextView nome, espec, emal, ender;
+    private Nutricionista n;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,27 +26,24 @@ public class PerfilNutricionista extends AppCompatActivity {
         espec = findViewById(R.id.textEspP);
         emal = findViewById(R.id.textEmailP);
         ender = findViewById(R.id.textEnderecoP);
-        tel = findViewById(R.id.textTelefoneP);
         setarNutri();
     }
 
     @SuppressLint("SetTextI18n")
     private void setarNutri() {
-        n = (NutricionistaModel) getIntent().getSerializableExtra("Nutri");
+        n = (Nutricionista) getIntent().getSerializableExtra("Nutri");
 
         assert n != null;
         foto.setImageResource(n.getFoto());
         nome.setText(getText(R.string.NomeCompleto)+": "+n.getNome());
         espec.setText(getText(R.string.Esp)+": "+n.getEspecialiacao());
         emal.setText(getText(R.string.Email) +": "+n.getEmail());
-        ender.setText(getText(R.string.End) +": "+n.getEndereco());
-        tel.setText(getText(R.string.tel) +": "+n.getTelefone());
     }
 
     public void marcarConsulta(View view) {
-        Intent i = new Intent(this, Consulta.class);
+        Intent i = new Intent(this, Consultas.class);
         i.putExtra("Nutri",n);
         startActivity(i);
-        Toast.makeText(view.getContext(),"Agendar ConsultaModel",Toast.LENGTH_LONG).show();
+        Toast.makeText(view.getContext(),"Agendar Consultas",Toast.LENGTH_LONG).show();
     }
 }

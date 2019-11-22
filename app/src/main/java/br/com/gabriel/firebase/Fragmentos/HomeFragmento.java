@@ -15,14 +15,13 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 
 import br.com.gabriel.firebase.R;
-import br.com.gabriel.firebase.model.Usuario;
+import br.com.gabriel.firebase.model.Paciente;
 
 public class HomeFragmento extends Fragment {
 
-    private ImageView ivFoto;
     private TextView homeNome, homeEmail;
     private View view;
-    private Usuario user;
+    private Paciente user;
 
     @Nullable
     @Override
@@ -32,10 +31,10 @@ public class HomeFragmento extends Fragment {
         try {
             Bundle bundle = getArguments();
             assert bundle != null;
-            user = bundle.getParcelable("Usuario");
+            user = (Paciente) bundle.getSerializable("Paciente");
             exibirDados();
         }catch (Exception e){
-            //Toast.makeText(view.getContext(),"Erro na exbição\n"+e.toString(),Toast.LENGTH_LONG).show();
+            Toast.makeText(view.getContext(),"Erro na exbição\n"+e.toString(),Toast.LENGTH_LONG).show();
         }
         return view;
     }
@@ -44,11 +43,9 @@ public class HomeFragmento extends Fragment {
         homeNome.setText(user.getNome());
         homeEmail.setText(user.getEmail());
 
-        Glide.with(view.getContext()).load(user.getFoto()).circleCrop().into(ivFoto);
     }
 
     private void iniciaComponentes() {
-        ivFoto = view.findViewById(R.id.IvFoto);
         homeNome = view.findViewById(R.id.homeNome);
         homeEmail = view.findViewById(R.id.homeEmail);
     }

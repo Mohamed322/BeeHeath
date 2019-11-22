@@ -20,16 +20,16 @@
 
 
 
-    <EditText
-        android:id="@+id/registerName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:hint="@string/NomeCompleto"
-        tools:layout_editor_absoluteX="99dp"
-        android:layout_marginBottom="5dp"
-        tools:layout_editor_absoluteY="218dp" />
+        <EditText
+            android:id="@+id/registerName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:hint="@string/NomeCompleto"
+            tools:layout_editor_absoluteX="99dp"
+            android:layout_marginBottom="5dp"
+            tools:layout_editor_absoluteY="218dp" />
 
         <EditText
             android:id="@+id/registerEmail"
