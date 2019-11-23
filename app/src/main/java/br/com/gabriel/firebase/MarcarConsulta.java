@@ -59,6 +59,7 @@ public class MarcarConsulta extends AppCompatActivity {
             Intent i = new Intent(this,ConsultaM.class);
             i.putExtra("Consulta",c);
             startActivity(i);
+            finish();
         });
         ArrayAdapter<Horario> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, consulta.getHorarios());
         listView.setAdapter(adapter);

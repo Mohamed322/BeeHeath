@@ -48,8 +48,7 @@
             android:layout_height="wrap_content"
             android:text="@string/Inscrever"
             tools:layout_editor_absoluteX="170dp"
-            tools:layout_editor_absoluteY="512dp"
-            android:onClick="registra"/>
+            tools:layout_editor_absoluteY="512dp"/>
 
 
     </LinearLayout>

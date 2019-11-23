@@ -55,6 +55,7 @@ public class Paciente extends Usuario implements Serializable {
     public JSONObject json(){
         JSONObject json = new JSONObject();
         try {
+            json.put("iduser",10);
             json.put("fullname", getNome());
             json.put("email", getEmail());
             json.put("password", getSenha());
@@ -62,6 +63,6 @@ public class Paciente extends Usuario implements Serializable {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return null;
+        return json;
     }
 }

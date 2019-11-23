@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -17,6 +18,7 @@ import br.com.gabriel.firebase.model.Nutricionista;
 public class RegistraNutri extends AppCompatActivity {
 
     private EditText txtCRN,txtEsp;
+    private Button buttonRegisterNutri;
     private RequestQueue requestQueue;
     private Nutricionista nutricionista;
 
@@ -28,6 +30,8 @@ public class RegistraNutri extends AppCompatActivity {
         nutricionista =(Nutricionista) bundle.getSerializable("Nutri");
         txtCRN = findViewById(R.id.registerCRN);
         txtEsp = findViewById(R.id.registerEsp);
+        buttonRegisterNutri = findViewById(R.id.buttonRegisterNutri);
+        buttonRegisterNutri.setOnClickListener(v -> registra(v));
 
     }
 

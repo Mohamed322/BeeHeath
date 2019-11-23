@@ -83,7 +83,7 @@ public class ConsultaMarcada implements Serializable {
             array.put("date", dataArray());
             array.put("place",getLocal());
             array.put("idnutritionist",getIdNutricionist());
-            array.put("idpatient",getIdPaciente());
+            array.put("idpatient",2);
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -25,6 +25,9 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import br.com.gabriel.firebase.model.Paciente;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
@@ -141,7 +144,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     if (task.isSuccessful()) {
                         Paciente paciente = new Paciente(account.getDisplayName(),
                                 account.getEmail(),account.getId(),"patient",null);
-                        enviaApi(paciente);
+                        //enviaApi(paciente);
+                        entrar(paciente);
                     } else {
                         alert("Falha na autenticação");
                     }
@@ -151,13 +155,22 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
 
     public void enviaApi(Paciente paciente){
+        JSONObject json = new JSONObject();
+        try {
+            json.put("fullname", paciente.getNome());
+            json.put("email", paciente.getEmail());
+            json.put("password", paciente.getSenha());
+            json.put("type", paciente.getTipo());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         String url = getString(
                 R.string.web_service_url
         )+"/user/login";
         JsonObjectRequest req = new JsonObjectRequest(
                 Request.Method.POST,
                 url,
-                paciente.json(),
+                json,
                 (resultado) ->{
                     Toast.makeText(this,resultado.toString(),Toast.LENGTH_LONG).show();
                     //entrar(paciente);
