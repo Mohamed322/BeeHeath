@@ -49,7 +49,7 @@ public class Consultas extends AppCompatActivity {
         n = (Nutricionista) intent.getSerializableExtra("Nutri");
         consFoto.setImageResource(n.getFoto());
         consNome.setText(n.getNome());
-        consEsp.setText(n.getEspecialiacao());
+        consEsp.setText(n.getSpecialization());
     }
 
     private void iniciarComponentes() {

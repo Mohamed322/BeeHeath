@@ -10,6 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -30,12 +34,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private SignInButton btnSingIn;
     private FirebaseAuth mFirebaseAuth;
     private GoogleApiClient mGoogleApiClient;
+    RequestQueue requestQueue;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        requestQueue = Volley.newRequestQueue(this);
         iniciaComponentes();
         iniciaFirebase();
         conectaGoogleApi();
@@ -43,12 +49,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
     private void clickButton() {
-        btnSingIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                singGoogle();
-            }
-        });
+        btnSingIn.setOnClickListener(v -> singGoogle());
     }
 
     private void conectaGoogleApi() {
@@ -139,11 +140,37 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Paciente paciente = new Paciente(account.getDisplayName(),
-                                account.getEmail(),account.getId(),"Pacient",null);
-                        entrar(paciente);
+                                account.getEmail(),account.getId(),"patient",null);
+                        enviaApi(paciente);
                     } else {
                         alert("Falha na autenticação");
                     }
                 });
+    }
+
+
+
+    public void enviaApi(Paciente paciente){
+        String url = getString(
+                R.string.web_service_url
+        )+"/user/login";
+        JsonObjectRequest req = new JsonObjectRequest(
+                Request.Method.POST,
+                url,
+                paciente.json(),
+                (resultado) ->{
+                    Toast.makeText(this,resultado.toString(),Toast.LENGTH_LONG).show();
+                    //entrar(paciente);
+                },
+                (excecao) ->{
+                    Toast.makeText(
+                            this,
+                            getString(R.string.connect_error),
+                            Toast.LENGTH_SHORT
+                    ).show();
+                    excecao.printStackTrace();
+                }
+        );
+        requestQueue.add(req);
     }
 }

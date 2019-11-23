@@ -76,7 +76,7 @@ public class ProcFragmento extends Fragment {
 
 
     private List<Nutricionista> enviaApi(String palavra) {
-        String url = getString(R.string.web_service_url) + "/nutritionist/";
+        String url = getString(R.string.web_service_url) + "/nutritionist/search?fullname=" + palavra;
         requestQueue = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
         JsonArrayRequest req = new JsonArrayRequest(
                 Request.Method.GET,
@@ -95,13 +95,15 @@ public class ProcFragmento extends Fragment {
                             String niver = iesimo.getString("birthday");
                             String esp = iesimo.getString("specialization");
                             int crn = iesimo.getInt("crn");
-                            dados.add(new Nutricionista(idUser, name, email, pwd,null,0,esp));
+                            Nutricionista n = new Nutricionista(idUser, name, email, pwd,null,0,esp);
+                            dados.add(n);
+                            Toast.makeText(getContext(), n.getId() + "", Toast.LENGTH_SHORT).show();
                         }
                         iniciaRecyclerView(dados);
                     } catch (JSONException e) {
                         Toast.makeText(getContext(),"Erro na resposta",Toast.LENGTH_SHORT).show();
                     }
-                    Toast.makeText(getContext(), resultado.toString(), Toast.LENGTH_SHORT).show();
+
                 },
                 (excecao) -> {
                     Toast.makeText(

@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Usuario implements Serializable {
 
-    private int id;
+    private static int id;
     private int foto;
     private String nome;
     private String email;
@@ -15,7 +15,7 @@ public class Usuario implements Serializable {
 
 
     public Usuario(int Id, String nome, String email, String senha, String tipo, Date nascimento) {
-        this.id = id;
+        this.id = Id;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
@@ -29,6 +29,10 @@ public class Usuario implements Serializable {
         this.senha = senha;
         this.tipo = tipo;
         this.nascimento = nascimento;
+    }
+
+    public Usuario() {
+
     }
 
     public String getTipo() {

@@ -48,7 +48,7 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ViewHold
 
             //Passando os dados para a View
             holder.textNome.setText(nutricionista.getNome());
-            holder.textEsp.setText(holder.textEsp.getText().toString() + ": " + nutricionista.getEspecialiacao());
+            holder.textEsp.setText(holder.textEsp.getText().toString() + ": " + nutricionista.getSpecialization());
             holder.img.setImageResource(nutricionista.getFoto());;
 
         }
@@ -86,5 +86,4 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ViewHold
             });
         }
     }
-
 }

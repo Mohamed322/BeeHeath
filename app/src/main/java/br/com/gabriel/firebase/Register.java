@@ -14,11 +14,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
-import java.util.UUID;
-
 import br.com.gabriel.firebase.model.Nutricionista;
 import br.com.gabriel.firebase.model.Paciente;
-import br.com.gabriel.firebase.model.Usuario;
 
 public class Register extends AppCompatActivity {
 
@@ -88,7 +85,7 @@ public class Register extends AppCompatActivity {
         JsonObjectRequest req = new JsonObjectRequest(
                 Request.Method.POST,
                 url,
-                null,
+                paciente.json(),
                 (resultado) ->{
                     entrar(paciente);
                 },

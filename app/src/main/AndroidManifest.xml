@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RegistraNutri"/>
+        <activity android:name=".ConsultaM"></activity>
+        <activity android:name=".RegistraNutri" />
         <activity android:name=".MarcarConsulta" />
         <activity android:name=".Consultas" />
         <activity android:name=".Register" />

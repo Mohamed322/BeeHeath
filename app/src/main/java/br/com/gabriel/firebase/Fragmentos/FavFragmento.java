@@ -52,8 +52,8 @@ public class FavFragmento extends Fragment {
 
     private ArrayList todasConsultasMarcadas(){
         return new ArrayList<ConsultaMarcada>(Arrays.asList(
-                new ConsultaMarcada(new Date(),"Douglas","Rua Martinho Claro","12:12"),
-                new ConsultaMarcada(new Date(),"Marcelo","Rua Martinho Claro","15:25")
+                new ConsultaMarcada(new Date(),0,"Rua Martinho Claro","12:12",0),
+                new ConsultaMarcada(new Date(),0,"Rua Martinho Claro","15:25",0)
                 ));
     }
 

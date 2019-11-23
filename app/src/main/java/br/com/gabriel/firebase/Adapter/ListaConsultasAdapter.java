@@ -1,7 +1,6 @@
 package br.com.gabriel.firebase.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import br.com.gabriel.firebase.PerfilNutricionista;
 import br.com.gabriel.firebase.R;
 import br.com.gabriel.firebase.model.ConsultaMarcada;
 
@@ -47,7 +45,7 @@ public class ListaConsultasAdapter extends RecyclerView.Adapter<ListaConsultasAd
             ConsultaMarcada consultaMarcada = dados.get(position);
 
             //Passando os dados para a View
-            holder.LC_Nutricionista.setText(consultaMarcada.getNutricionista());
+            holder.LC_Nutricionista.setText(consultaMarcada.getNutricionista() + "");
             holder.LC_Horario.setText(consultaMarcada.getHorario());
             holder.LC_Data.setText(consultaMarcada.getData());
             holder.LC_Local.setText(consultaMarcada.getLocal());
@@ -76,11 +74,10 @@ public class ListaConsultasAdapter extends RecyclerView.Adapter<ListaConsultasAd
             LC_Local =  itemView.findViewById(R.id.LC_Local);
             LC_Horario =  itemView.findViewById(R.id.LC_Horario);
 
-
             itemView.setOnClickListener(v -> {
                 if (dados.size() > 0) {
                     /*
-                    ConsultaMarcada consultaMarcada= dados.get(getLayoutPosition());
+                    ConsultaM consultaMarcada= dados.get(getLayoutPosition());
                     Intent intent = new Intent(context, PerfilNutricionista.class);
                     intent.putExtra("Consultas", consultaMarcada);
                     context.startActivity(intent);

@@ -10,14 +10,11 @@ public class Consulta implements Serializable {
     private Date data;
     private Nutricionista nutricionista;
 
-
-
     public Consulta(List<Horario> horarios, Date data, Nutricionista nutricionista) {
         this.horarios = horarios;
         this.data = data;
         this.nutricionista = nutricionista;
     }
-
 
     public Nutricionista getNutricionista() {
         return nutricionista;

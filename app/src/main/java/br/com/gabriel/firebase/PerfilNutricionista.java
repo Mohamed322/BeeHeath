@@ -36,7 +36,7 @@ public class PerfilNutricionista extends AppCompatActivity {
         assert n != null;
         foto.setImageResource(n.getFoto());
         nome.setText(getText(R.string.NomeCompleto)+": "+n.getNome());
-        espec.setText(getText(R.string.Esp)+": "+n.getEspecialiacao());
+        espec.setText(getText(R.string.Esp)+": "+n.getSpecialization());
         emal.setText(getText(R.string.Email) +": "+n.getEmail());
     }
 

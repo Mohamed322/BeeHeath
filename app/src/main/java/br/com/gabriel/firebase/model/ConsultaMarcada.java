@@ -1,28 +1,50 @@
 package br.com.gabriel.firebase.model;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ConsultaMarcada implements Serializable {
     private Date data;
-    private String nutricionista;
+    private int idNutricionist;
+    private int idPaciente;
     private String Local;
     private String horario;
 
+    public int getIdNutricionist() {
+        return idNutricionist;
+    }
+
+    public void setIdNutricionist(int idNutricionist) {
+        this.idNutricionist = idNutricionist;
+    }
+
+    public int getIdPaciente() {
+        return idPaciente;
+    }
+
+    public void setIdPaciente(int idPaciente) {
+        this.idPaciente = idPaciente;
+    }
+
+
     public String getData() {
-        return data.toGMTString();
+        return data.toString();
     }
 
     public void setData(Date data) {
         this.data = data;
     }
 
-    public String getNutricionista() {
-        return nutricionista;
+    public int getNutricionista() {
+        return idNutricionist;
     }
 
-    public void setNutricionista(String nutricionista) {
-        this.nutricionista = nutricionista;
+    public void setNutricionista(int nutricionista) {
+        this.idNutricionist = nutricionista;
     }
 
     public String getLocal() {
@@ -41,10 +63,31 @@ public class ConsultaMarcada implements Serializable {
         this.horario = horario;
     }
 
-    public ConsultaMarcada(Date data, String nutricionista, String local, String horario) {
+    public ConsultaMarcada(Date data, int nutricionista, String local, String horario,int idPaciente) {
         this.data = data;
-        this.nutricionista = nutricionista;
+        this.idNutricionist = nutricionista;
         Local = local;
         this.horario = horario;
+        this.idPaciente = idPaciente;
+    }
+
+    public String dataArray(){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String date = format.format(Date.parse(getData()));
+        return date;
+    }
+
+    public JSONObject array(){
+        JSONObject array = new JSONObject();
+        try {
+            array.put("date", dataArray());
+            array.put("place",getLocal());
+            array.put("idnutritionist",getIdNutricionist());
+            array.put("idpatient",getIdPaciente());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return array;
     }
 }
