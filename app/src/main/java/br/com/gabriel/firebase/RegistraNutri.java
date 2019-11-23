@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 
 import br.com.gabriel.firebase.model.Nutricionista;
 
@@ -26,6 +27,7 @@ public class RegistraNutri extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registra_nutri);
+        requestQueue = Volley.newRequestQueue(this);
         Bundle bundle = getIntent().getExtras();
         nutricionista =(Nutricionista) bundle.getSerializable("Nutri");
         txtCRN = findViewById(R.id.registerCRN);

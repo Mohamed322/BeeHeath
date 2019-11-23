@@ -19,6 +19,10 @@ public class Paciente extends Usuario implements Serializable {
         this.description = description;
     }
 
+    public Paciente() {
+
+    }
+
     public Double getWeight() {
         return weight;
     }

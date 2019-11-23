@@ -60,7 +60,7 @@ public class Consultas extends AppCompatActivity {
     }
 
     private List<Consulta> todasConsultas() {
-        return new ArrayList<Consulta>(Arrays.asList(
+        return new ArrayList<>(Arrays.asList(
                 new Consulta(todosHorarios(), new Date("12/04/2019"),n),
                 new Consulta(todosHorarios(), new Date("09/08/2019"),n),
                 new Consulta(todosHorarios(), new Date("01/01/2019"),n),

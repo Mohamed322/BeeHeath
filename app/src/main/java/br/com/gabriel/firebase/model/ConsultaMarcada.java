@@ -9,17 +9,17 @@ import java.util.Date;
 
 public class ConsultaMarcada implements Serializable {
     private Date data;
-    private int idNutricionist;
+    private Nutricionista Nutricionist;
     private int idPaciente;
     private String Local;
     private String horario;
 
-    public int getIdNutricionist() {
-        return idNutricionist;
+    public Nutricionista getNutricionist() {
+        return Nutricionist;
     }
 
-    public void setIdNutricionist(int idNutricionist) {
-        this.idNutricionist = idNutricionist;
+    public void setNutricionist(Nutricionista nutricionist) {
+        Nutricionist = nutricionist;
     }
 
     public int getIdPaciente() {
@@ -39,14 +39,6 @@ public class ConsultaMarcada implements Serializable {
         this.data = data;
     }
 
-    public int getNutricionista() {
-        return idNutricionist;
-    }
-
-    public void setNutricionista(int nutricionista) {
-        this.idNutricionist = nutricionista;
-    }
-
     public String getLocal() {
         return Local;
     }
@@ -63,9 +55,9 @@ public class ConsultaMarcada implements Serializable {
         this.horario = horario;
     }
 
-    public ConsultaMarcada(Date data, int nutricionista, String local, String horario,int idPaciente) {
+    public ConsultaMarcada(Date data, Nutricionista nutricionista, String local, String horario,int idPaciente) {
         this.data = data;
-        this.idNutricionist = nutricionista;
+        this.Nutricionist = nutricionista;
         Local = local;
         this.horario = horario;
         this.idPaciente = idPaciente;
@@ -74,7 +66,7 @@ public class ConsultaMarcada implements Serializable {
     public String dataArray(){
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String date = format.format(Date.parse(getData()));
-        return date;
+        return date + getHorario();
     }
 
     public JSONObject array(){
@@ -82,8 +74,8 @@ public class ConsultaMarcada implements Serializable {
         try {
             array.put("date", dataArray());
             array.put("place",getLocal());
-            array.put("idnutritionist",getIdNutricionist());
-            array.put("idpatient",2);
+            array.put("idnutritionist",getNutricionist().getId());
+            array.put("idpatient",getIdPaciente());
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -31,9 +31,17 @@
         android:layout_height="wrap_content"
         android:text="TextView" />
 
-    <Button
-        android:id="@+id/ConsultaMarcar"
+    <LinearLayout
+        android:id="@+id/esconder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Marcar"/>
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/ConsultaMarcar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Marcar" />
+    </LinearLayout>
+
 </LinearLayout>

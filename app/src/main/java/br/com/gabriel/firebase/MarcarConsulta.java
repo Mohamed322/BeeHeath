@@ -34,14 +34,10 @@ public class MarcarConsulta extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("id", Context.MODE_PRIVATE);
         result = sharedPreferences.getString("id", "");
         setContentView(R.layout.activity_marcar_consulta);
-        try {
-            consulta = (Consulta) getIntent().getSerializableExtra("Consultas");
-            assert consulta != null;
-            iniciarComponentes();
-            setarValores();
-        } catch (Exception e) {
-            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
-        }
+        consulta = (Consulta) getIntent().getSerializableExtra("Consultas");
+        assert consulta != null;
+        iniciarComponentes();
+        setarValores();
     }
 
     public void setarValores() {
@@ -53,11 +49,11 @@ public class MarcarConsulta extends AppCompatActivity {
         listView.setOnItemClickListener((parent, view, position, id) -> {
             //Seu codigo aqui
             Horario h = consulta.getHorarios().get(position);
-            ConsultaMarcada c = new ConsultaMarcada(consulta.getData(),consulta.getNutricionista().getId(),
-                    h.getLocal(),h.getHorario().toString(),Integer.parseInt(result));
-            Toast.makeText(this,consulta.getNutricionista().getId() + "",Toast.LENGTH_SHORT).show();
-            Intent i = new Intent(this,ConsultaM.class);
-            i.putExtra("Consulta",c);
+            ConsultaMarcada c = new ConsultaMarcada(consulta.getData(), consulta.getNutricionista(),
+                    h.getLocal(), h.getHorario().toString(), Integer.parseInt(result));
+            Toast.makeText(this, consulta.getNutricionista().getId() + "", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(this, ConsultaM.class);
+            i.putExtra("Consulta", c);
             startActivity(i);
             finish();
         });

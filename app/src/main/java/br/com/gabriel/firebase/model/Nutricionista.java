@@ -14,7 +14,7 @@ public class Nutricionista extends Usuario implements Serializable {
 
     public Nutricionista(String nome,String email, String senha, Date nascimento,  int crn,
                          String specialization) {
-        super(nome,email,senha,"Nutritionist", nascimento);
+        super(nome,email,senha,"nutritionist", nascimento);
         this.crn = crn;
         this.specialization = specialization;
     }

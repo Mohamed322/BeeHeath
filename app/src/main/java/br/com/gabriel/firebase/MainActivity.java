@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private SignInButton btnSingIn;
     private FirebaseAuth mFirebaseAuth;
     private GoogleApiClient mGoogleApiClient;
-    RequestQueue requestQueue;
+    private RequestQueue requestQueue;
 
 
     @Override
@@ -91,27 +91,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             alert("Senha em branco");
             senha.requestFocus();
         } else {
-            if (login.getText().toString().equals("admin")) {
-                if (senha.getText().toString().equals("admin")) {
-                    entrar(null);
-                } else {
-                    alert("Senha Incorreta");
-                }
-            } else {
-                alert("Login Incorreto");
-            }
+            Paciente p = new Paciente();
+            p.setEmail(login.getText().toString());
+            p.setSenha(login.getText().toString());
+            enviaApi(p,false);
+            finish();
         }
     }
 
     private void entrar(Paciente user) {
         Intent intent = new Intent(this, Menu.class);
-        intent.putExtra("Paciente",user);
+        intent.putExtra("Paciente", user);
         startActivity(intent);
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        alert("Falha na conexão");
     }
 
     private void alert(String s) {
@@ -123,6 +114,82 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         startActivityForResult(i, 1);
     }
 
+    private void firebaseLogin(GoogleSignInAccount account) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
+        mFirebaseAuth.signInWithCredential(credential)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Paciente paciente = new Paciente(account.getDisplayName(),
+                                account.getEmail(), account.getId(), "patient", null);
+                        enviaApi(paciente, true);
+                    } else {
+                        alert("Falha na autenticação");
+                    }
+                });
+    }
+
+    public void enviaApi(Paciente paciente, boolean google) {
+        String url = getString(R.string.web_service_url) + "/user/login";
+        JsonObjectRequest req = new JsonObjectRequest(
+                Request.Method.POST,
+                url,
+                paciente.json(),
+                (resultado) -> {
+                    try {
+                        paciente.setId(resultado.getInt("iduser"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    entrar(paciente);
+                    finish();
+                },
+                (excecao) -> {
+                    if (excecao.networkResponse.statusCode == 404) {
+                        if (google) {
+                            enviaApiRegistrer(paciente);
+                        } else {
+                            alert("Usuario não encontrado");
+                        }
+                    }else {
+                        alert(getString(R.string.connect_error));
+                        excecao.printStackTrace();
+                    }
+                }
+        );
+        requestQueue.add(req);
+    }
+
+    public void enviaApiRegistrer(Paciente paciente) {
+        String url = getString(
+                R.string.web_service_url
+        ) + "/user/register/";
+        JsonObjectRequest req = new JsonObjectRequest(
+                Request.Method.POST,
+                url,
+                paciente.json(),
+                (resultado) -> {
+                    try {
+                        int idUser = resultado.getInt("iduser");
+                        paciente.setId(idUser);
+                        entrar(paciente);
+                        finish();
+                    } catch (JSONException e) {
+                        alert("Erro na resposta2");
+                    }
+                },
+                (excecao) -> {
+                    alert(getString(R.string.connect_error));
+                    excecao.printStackTrace();
+                }
+        );
+        requestQueue.add(req);
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        alert("Falha na conexão");
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -132,58 +199,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             if (result.isSuccess()) {
                 GoogleSignInAccount account = result.getSignInAccount();
                 //Alterar para mandar para o banco
+                assert account != null;
                 firebaseLogin(account);
             }
         }
     }
 
-    private void firebaseLogin(GoogleSignInAccount account) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
-        mFirebaseAuth.signInWithCredential(credential)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Paciente paciente = new Paciente(account.getDisplayName(),
-                                account.getEmail(),account.getId(),"patient",null);
-                        //enviaApi(paciente);
-                        entrar(paciente);
-                    } else {
-                        alert("Falha na autenticação");
-                    }
-                });
-    }
-
-
-
-    public void enviaApi(Paciente paciente){
-        JSONObject json = new JSONObject();
-        try {
-            json.put("fullname", paciente.getNome());
-            json.put("email", paciente.getEmail());
-            json.put("password", paciente.getSenha());
-            json.put("type", paciente.getTipo());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        String url = getString(
-                R.string.web_service_url
-        )+"/user/login";
-        JsonObjectRequest req = new JsonObjectRequest(
-                Request.Method.POST,
-                url,
-                json,
-                (resultado) ->{
-                    Toast.makeText(this,resultado.toString(),Toast.LENGTH_LONG).show();
-                    //entrar(paciente);
-                },
-                (excecao) ->{
-                    Toast.makeText(
-                            this,
-                            getString(R.string.connect_error),
-                            Toast.LENGTH_SHORT
-                    ).show();
-                    excecao.printStackTrace();
-                }
-        );
-        requestQueue.add(req);
-    }
 }

@@ -28,15 +28,15 @@ public class Menu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
-
         bundle = getIntent().getExtras();
         Paciente user =(Paciente) bundle.getSerializable("Paciente");
-        bundle.putSerializable("Paciente",user);
-        SharedPreferences sharedPreferences = getSharedPreferences("id", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("id", user.getId()+"");
-        editor.commit();
+        docPreferences(user);
         alert(user.getNome());
+        iniciarComponentes();
+    }
+
+
+    private void iniciarComponentes() {
         navListener = menuItem -> {
             switch (menuItem.getItemId()) {
                 case R.id.Home:
@@ -49,7 +49,6 @@ public class Menu extends AppCompatActivity {
                     fragSelecionado = new ProcFragmento();
                     break;
             }
-
             fragSelecionado.setArguments(bundle);
             getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.fadein, R.anim.fadeout)
@@ -57,12 +56,20 @@ public class Menu extends AppCompatActivity {
 
             return true;
         };
+
         BottomNavigationView bottomNavigationView = findViewById(R.id.botoes_navegacao);
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
         fragSelecionado = new HomeFragmento();
         fragSelecionado.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.container_fragmento,
-               fragSelecionado).commit();
+                fragSelecionado).commit();
+    }
+
+    private void docPreferences(Paciente user) {
+        SharedPreferences sharedPreferences = getSharedPreferences("id", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("id", user.getId()+"");
+        editor.apply();
     }
 
     private void alert(String msg) {

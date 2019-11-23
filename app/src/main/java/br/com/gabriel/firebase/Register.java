@@ -14,20 +14,27 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import br.com.gabriel.firebase.model.Nutricionista;
 import br.com.gabriel.firebase.model.Paciente;
 
 public class Register extends AppCompatActivity {
 
-    EditText nome, email, senha;
-    RadioButton paciente, nutricionista;
-    RequestQueue requestQueue;
+    private EditText nome, email, senha;
+    private RadioButton paciente, nutricionista;
+    private RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
         requestQueue = Volley.newRequestQueue(this);
+        iniciarComponentes();
+    }
+
+    private void iniciarComponentes() {
         nome = findViewById(R.id.registerName);
         email = findViewById(R.id.registerEmail);
         senha = findViewById(R.id.registerPassword);
@@ -35,28 +42,26 @@ public class Register extends AppCompatActivity {
         nutricionista = findViewById(R.id.checkDoctor);
     }
 
-
     public void entrar(Paciente paciente) {
         Intent intent = new Intent(this, Menu.class);
-        intent.putExtra("Paciente",paciente);
+        intent.putExtra("Paciente", paciente);
         startActivity(intent);
     }
 
     public void Autenticar(View view) {
-
         if (nome.length() > 0) {
             if (email.length() > 0) {
                 if (senha.length() > 0) {
                     if (paciente.isChecked()) {
-                        Paciente usuario = new Paciente(nome.getText().toString(),email.getText().toString()
-                                ,senha.getText().toString(),"patient",null);
+                        Paciente usuario = new Paciente(nome.getText().toString(), email.getText().toString()
+                                , senha.getText().toString(), "patient", null);
                         enviaApi(usuario);
 
                     } else if (nutricionista.isChecked()) {
-                        Nutricionista nutricionista = new Nutricionista(nome.getText().toString(),email.getText().toString()
-                                ,senha.getText().toString(),null,0,null);
-                        Intent i = new Intent(this,RegistraNutri.class);
-                        i.putExtra("Nutri",nutricionista);
+                        Nutricionista nutricionista = new Nutricionista(nome.getText().toString(), email.getText().toString()
+                                , senha.getText().toString(), null, 0, null);
+                        Intent i = new Intent(this, RegistraNutri.class);
+                        i.putExtra("Nutri", nutricionista);
                         startActivity(i);
 
                     } else {
@@ -78,18 +83,26 @@ public class Register extends AppCompatActivity {
 
     }
 
-    public void enviaApi(Paciente paciente){
+    public void enviaApi(Paciente paciente) {
         String url = getString(
                 R.string.web_service_url
-                )+"/user/register/";
+        ) + "/user/register/";
         JsonObjectRequest req = new JsonObjectRequest(
                 Request.Method.POST,
                 url,
                 paciente.json(),
-                (resultado) ->{
-                    entrar(paciente);
+                (resultado) -> {
+                    try {
+                        int idUser = resultado.getInt("iduser");
+                        paciente.setId(idUser);
+                        Toast.makeText(this, paciente.toString(), Toast.LENGTH_LONG).show();
+                        entrar(paciente);
+                    } catch (JSONException e) {
+                        Toast.makeText(this, "Erro na resposta", Toast.LENGTH_SHORT).show();
+                    }
+
                 },
-                (excecao) ->{
+                (excecao) -> {
                     Toast.makeText(
                             this,
                             getString(R.string.connect_error),
