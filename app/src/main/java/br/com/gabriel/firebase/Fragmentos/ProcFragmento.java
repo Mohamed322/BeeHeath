@@ -119,8 +119,6 @@ public class ProcFragmento extends Fragment {
     }
 
     private void iniciaRecyclerView(List<Nutricionista> dados) {
-
-
         //Criação do LayoutManager
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         lstDados.setLayoutManager(linearLayoutManager);

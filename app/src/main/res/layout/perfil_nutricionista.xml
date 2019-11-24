@@ -35,14 +35,6 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/textTelefoneP"
-        android:text="@string/tel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/tamLetra"
-        android:textStyle="bold" />
-
-    <TextView
         android:id="@+id/textEmailP"
         android:text="@string/Email"
         android:layout_width="match_parent"

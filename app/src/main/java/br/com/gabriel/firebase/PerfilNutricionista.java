@@ -24,7 +24,6 @@ public class PerfilNutricionista extends AppCompatActivity {
         foto = findViewById(R.id.fotoP);
         nome = findViewById(R.id.textNomeP);
         espec = findViewById(R.id.textEspP);
-        emal = findViewById(R.id.textEmailP);
         ender = findViewById(R.id.textEnderecoP);
         setarNutri();
     }
@@ -32,7 +31,6 @@ public class PerfilNutricionista extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     private void setarNutri() {
         n = (Nutricionista) getIntent().getSerializableExtra("Nutri");
-
         assert n != null;
         foto.setImageResource(n.getFoto());
         nome.setText(getText(R.string.NomeCompleto)+": "+n.getNome());

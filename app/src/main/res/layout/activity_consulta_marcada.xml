@@ -8,28 +8,36 @@
     tools:context=".ConsultaM" >
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/ConsultaMarcarNutri"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textSize="@dimen/tamLetra"
+        android:textStyle="bold"/>
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/ConsultaMarcarEsp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textSize="@dimen/tamLetra"
+        android:textStyle="bold"/>
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/ConsultaMarcarLocal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textSize="@dimen/tamLetra"
+        android:textStyle="bold"/>
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/ConsultaMarcarData"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textSize="@dimen/tamLetra"
+        android:textStyle="bold"/>
 
     <LinearLayout
         android:id="@+id/esconder"

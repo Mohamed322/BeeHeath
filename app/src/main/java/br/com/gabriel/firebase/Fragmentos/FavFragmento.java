@@ -48,23 +48,13 @@ public class FavFragmento extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragmento_fav, container, false);
         favRecycler = view.findViewById(R.id.favRecicler);
-        try {
-            Bundle bundle = getArguments();
-            user = (Usuario) bundle.getSerializable("Paciente");
-            enviaApi(user.getId()+"");
-        }catch (Exception e) {
-            Toast.makeText(getContext(), "Erro na exbição\n" + e.toString(), Toast.LENGTH_LONG).show();
-        }
-        //iniciaRecyclerView(todasConsultasMarcadas());
+        Bundle bundle = getArguments();
+        user = (Usuario) bundle.getSerializable("Paciente");
+        enviaApi(user.getId() + "");
         return view;
     }
 
-    private ArrayList todasConsultasMarcadas(){
-        return new ArrayList<>(Arrays.asList(
-                new ConsultaMarcada(new Date().toString(),null,"Rua Martinho Claro","12:12",0),
-                new ConsultaMarcada(new Date().toString(),null,"Rua Martinho Claro","15:25",0)
-                ));
-    }
+    
 
     private List<ConsultaMarcada> enviaApi(String palavra) {
         String url = getString(R.string.web_service_url) + "/consult/patient/" + palavra;
@@ -76,7 +66,6 @@ public class FavFragmento extends Fragment {
                 (resultado) -> {
                     dados = new ArrayList<>();
                     try {
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
                         JSONObject iesimo;
                         for (int i = 0; i < resultado.length(); i++) {
                             iesimo = resultado.getJSONObject(i);
@@ -90,14 +79,13 @@ public class FavFragmento extends Fragment {
                             String niver = a.getString("birthday");
                             String esp = a.getString("specialization");
                             int crn = a.getInt("crn");
-                            Nutricionista n = new Nutricionista(idUser, name, email, pwd,null,crn,esp);
-                            dados.add(new ConsultaMarcada(dateFormat.parse(date).toString(),n,place,null));
+                            Nutricionista n = new Nutricionista(idUser, name, email, pwd, null, crn, esp);
+                            dados.add(new ConsultaMarcada(date, n, place, null));
+                            Toast.makeText(getContext(), "Bateu", Toast.LENGTH_SHORT).show();
                         }
                         iniciaRecyclerView(dados);
                     } catch (JSONException e) {
-                        Toast.makeText(getContext(),"Erro na resposta",Toast.LENGTH_SHORT).show();
-                    } catch (ParseException e) {
-                        Toast.makeText(getContext(),"Erro na data",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Erro na resposta", Toast.LENGTH_SHORT).show();
                     }
 
                 },
@@ -121,7 +109,7 @@ public class FavFragmento extends Fragment {
         favRecycler.setLayoutManager(linearLayoutManager);
 
         //Passando para o adapter
-        ListaConsultasAdapter listaConsultasAdapter= new ListaConsultasAdapter(dados);
+        ListaConsultasAdapter listaConsultasAdapter = new ListaConsultasAdapter(dados);
 
         //Setando na tela
         favRecycler.setAdapter(listaConsultasAdapter);

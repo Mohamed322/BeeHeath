@@ -30,7 +30,7 @@
     <string name="LogOut">Sair</string>
     <string name="consulta">Agendar Consulta</string>
     <string name="connect_error">Erro na conexão</string>
-    <string name="web_service_url">http://fe882ef8.ngrok.io</string>
+    <string name="web_service_url">http://5d8fdf81.ngrok.io</string>
     <string name="no_data_available">Busque por um nutricionista</string>
     <string name="nEncontrado">\"Não Encontrado\"</string>
     <string name="Data">Data:</string>
@@ -38,4 +38,5 @@
     <string name="ConsultaMarcada">Consultas Marcadas</string>
     <string name="crn">crn</string>
     <string name="Marcar">Marcar Consulta</string>
+    <string name="local">Local</string>
 </resources>

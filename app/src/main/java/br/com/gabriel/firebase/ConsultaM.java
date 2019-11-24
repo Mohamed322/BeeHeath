@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -17,17 +18,34 @@ import com.android.volley.toolbox.Volley;
 import br.com.gabriel.firebase.model.ConsultaMarcada;
 
 public class ConsultaM extends AppCompatActivity {
-    RequestQueue requestQueue;
-    ConsultaMarcada consulta;
+
+    private TextView ConsultaMarcarNutri, ConsultaMarcarData, ConsultaMarcarEsp, ConsultaMarcarLocal;
+    private RequestQueue requestQueue;
+    private ConsultaMarcada consulta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consulta_marcada);
-
+        iniciarCmponentes();
         consulta = (ConsultaMarcada) getIntent().getSerializableExtra("Consulta");
+        setInfo();
         Button b = findViewById(R.id.ConsultaMarcar);
         b.setOnClickListener(v -> enviaApi(consulta));
+    }
+
+    private void setInfo() {
+        ConsultaMarcarLocal.setText(getText(R.string.local) + ":" + consulta.getLocal());
+        ConsultaMarcarEsp.setText(getText(R.string.Esp) + ":" + consulta.getNutricionist().getSpecialization());
+        ConsultaMarcarData.setText(getText(R.string.Data) + ":" + consulta.getData());
+        ConsultaMarcarNutri.setText(getText(R.string.NomeCompleto) + ":" + consulta.getNutricionist().getNome());
+    }
+
+    private void iniciarCmponentes() {
+        ConsultaMarcarNutri = findViewById(R.id.ConsultaMarcarNutri);
+        ConsultaMarcarData = findViewById(R.id.ConsultaMarcarData);
+        ConsultaMarcarEsp = findViewById(R.id.ConsultaMarcarEsp);
+        ConsultaMarcarLocal = findViewById(R.id.ConsultaMarcarLocal);
     }
 
     public void enviaApi(ConsultaMarcada consulta) {
