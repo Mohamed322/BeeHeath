@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -61,21 +63,27 @@ public class Consultas extends AppCompatActivity {
 
     private List<Consulta> todasConsultas() {
         return new ArrayList<>(Arrays.asList(
-                new Consulta(todosHorarios(), new Date("12/04/2019"),n),
-                new Consulta(todosHorarios(), new Date("09/08/2019"),n),
-                new Consulta(todosHorarios(), new Date("01/01/2019"),n),
-                new Consulta(todosHorarios(), new Date("12/02/2019"),n)
+                new Consulta(todosHorarios(), "12/04/2019",n),
+                new Consulta(todosHorarios(), "09/08/2019",n),
+                new Consulta(todosHorarios(), "01/01/2019",n),
+                new Consulta(todosHorarios(), "12/02/2019",n)
         ));
     }
 
 
     private List<Horario> todosHorarios(){
         Random r = new Random();
-        return new ArrayList<>(Arrays.asList(
-                new Horario("Rua Joaquim Moraes", new Time(r.nextInt())),
-                new Horario("Rua Vital Brasil", new Time(r.nextInt())),
-                new Horario("Rua dos Bobos", new Time(r.nextInt()))
-        ));
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:");
+        try {
+            return new ArrayList<>(Arrays.asList(
+                    new Horario("Rua Joaquim Moraes", dateFormat.parse(new Time(r.nextInt()).toString()).toString()),
+                    new Horario("Rua Vital Brasil", dateFormat.parse(new Time(r.nextInt()).toString()).toString()),
+                    new Horario("Rua dos Bobos", dateFormat.parse(new Time(r.nextInt()).toString()).toString())
+            ));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

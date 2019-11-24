@@ -95,7 +95,7 @@ public class ProcFragmento extends Fragment {
                             String niver = iesimo.getString("birthday");
                             String esp = iesimo.getString("specialization");
                             int crn = iesimo.getInt("crn");
-                            Nutricionista n = new Nutricionista(idUser, name, email, pwd,null,0,esp);
+                            Nutricionista n = new Nutricionista(idUser, name, email, pwd,null,crn,esp);
                             dados.add(n);
                             Toast.makeText(getContext(), n.getId() + "", Toast.LENGTH_SHORT).show();
                         }

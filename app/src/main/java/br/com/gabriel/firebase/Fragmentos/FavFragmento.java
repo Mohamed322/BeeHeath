@@ -20,6 +20,9 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -47,24 +50,24 @@ public class FavFragmento extends Fragment {
         favRecycler = view.findViewById(R.id.favRecicler);
         try {
             Bundle bundle = getArguments();
-            user = (Usuario) bundle.getSerializable("Usuario");
+            user = (Usuario) bundle.getSerializable("Paciente");
             enviaApi(user.getId()+"");
         }catch (Exception e) {
             Toast.makeText(getContext(), "Erro na exbição\n" + e.toString(), Toast.LENGTH_LONG).show();
         }
-        iniciaRecyclerView(todasConsultasMarcadas());
+        //iniciaRecyclerView(todasConsultasMarcadas());
         return view;
     }
 
     private ArrayList todasConsultasMarcadas(){
         return new ArrayList<>(Arrays.asList(
-                new ConsultaMarcada(new Date(),null,"Rua Martinho Claro","12:12",0),
-                new ConsultaMarcada(new Date(),null,"Rua Martinho Claro","15:25",0)
+                new ConsultaMarcada(new Date().toString(),null,"Rua Martinho Claro","12:12",0),
+                new ConsultaMarcada(new Date().toString(),null,"Rua Martinho Claro","15:25",0)
                 ));
     }
 
     private List<ConsultaMarcada> enviaApi(String palavra) {
-        String url = getString(R.string.web_service_url) + "/consult/search?idconsult=" + palavra;
+        String url = getString(R.string.web_service_url) + "/consult/patient/" + palavra;
         requestQueue = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
         JsonArrayRequest req = new JsonArrayRequest(
                 Request.Method.GET,
@@ -73,22 +76,28 @@ public class FavFragmento extends Fragment {
                 (resultado) -> {
                     dados = new ArrayList<>();
                     try {
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
                         JSONObject iesimo;
                         for (int i = 0; i < resultado.length(); i++) {
                             iesimo = resultado.getJSONObject(i);
-                            int idUser = iesimo.getInt("iduser");
-                            String email = iesimo.getString("email");
-                            String pwd = iesimo.getString("password");
-                            String name = iesimo.getString("fullname");
-                            String niver = iesimo.getString("birthday");
-                            String esp = iesimo.getString("specialization");
-                            int crn = iesimo.getInt("crn");
-                            Nutricionista n = new Nutricionista(idUser, name, email, pwd,null,0,esp);
-                            Toast.makeText(getContext(), n.getId() + "", Toast.LENGTH_SHORT).show();
+                            String place = iesimo.getString("place");
+                            String date = iesimo.getString("date");
+                            JSONObject a = iesimo.getJSONObject("nutritionist");
+                            int idUser = a.getInt("iduser");
+                            String email = a.getString("email");
+                            String pwd = a.getString("password");
+                            String name = a.getString("fullname");
+                            String niver = a.getString("birthday");
+                            String esp = a.getString("specialization");
+                            int crn = a.getInt("crn");
+                            Nutricionista n = new Nutricionista(idUser, name, email, pwd,null,crn,esp);
+                            dados.add(new ConsultaMarcada(dateFormat.parse(date).toString(),n,place,null));
                         }
                         iniciaRecyclerView(dados);
                     } catch (JSONException e) {
                         Toast.makeText(getContext(),"Erro na resposta",Toast.LENGTH_SHORT).show();
+                    } catch (ParseException e) {
+                        Toast.makeText(getContext(),"Erro na data",Toast.LENGTH_SHORT).show();
                     }
 
                 },

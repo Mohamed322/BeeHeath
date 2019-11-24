@@ -9,9 +9,9 @@ import java.sql.Time;
 public class Horario  implements Serializable {
 
     private String local;
-    private Time horario;
+    private String horario;
 
-    public Horario(String local, Time horario) {
+    public Horario(String local, String horario) {
         this.local = local;
         this.horario = horario;
     }
@@ -30,11 +30,11 @@ public class Horario  implements Serializable {
         this.local = local;
     }
 
-    public Time getHorario() {
+    public String getHorario() {
         return horario;
     }
 
-    public void setHorario(Time horario) {
+    public void setHorario(String horario) {
         this.horario = horario;
     }
 

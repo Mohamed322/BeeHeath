@@ -7,10 +7,10 @@ import java.util.List;
 public class Consulta implements Serializable {
 
     private List<Horario> horarios;
-    private Date data;
+    private String data;
     private Nutricionista nutricionista;
 
-    public Consulta(List<Horario> horarios, Date data, Nutricionista nutricionista) {
+    public Consulta(List<Horario> horarios, String data, Nutricionista nutricionista) {
         this.horarios = horarios;
         this.data = data;
         this.nutricionista = nutricionista;
@@ -32,11 +32,11 @@ public class Consulta implements Serializable {
         this.horarios = horarios;
     }
 
-    public Date getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 

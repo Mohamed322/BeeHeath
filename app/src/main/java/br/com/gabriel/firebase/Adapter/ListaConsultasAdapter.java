@@ -45,7 +45,7 @@ public class ListaConsultasAdapter extends RecyclerView.Adapter<ListaConsultasAd
             ConsultaMarcada consultaMarcada = dados.get(position);
 
             //Passando os dados para a View
-            holder.LC_Nutricionista.setText(consultaMarcada.getNutricionist().getNome());
+            //holder.LC_Nutricionista.setText(consultaMarcada.getNutricionist().getNome());
             holder.LC_Horario.setText(consultaMarcada.getHorario());
             holder.LC_Data.setText(consultaMarcada.getData());
             holder.LC_Local.setText(consultaMarcada.getLocal());

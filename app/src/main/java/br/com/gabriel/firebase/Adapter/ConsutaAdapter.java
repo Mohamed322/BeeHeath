@@ -48,7 +48,7 @@ public class ConsutaAdapter extends RecyclerView.Adapter<ConsutaAdapter.ViewHold
             Consulta consulta = dados.get(position);
 
             //Passando os dados para a View
-            holder.txtDataConsulta.setText(DateFormat.getDateInstance().format(consulta.getData()));
+            holder.txtDataConsulta.setText(consulta.getData());
             holder.txtNConsulta.setText("vagas: "+consulta.getHorario() + " ");
         }
     }
