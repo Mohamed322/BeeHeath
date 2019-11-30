@@ -4,21 +4,34 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.sql.Time;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class ConsultaMarcada implements Serializable {
+    private  int idConsult;
     private String data;
     private Nutricionista Nutricionist;
     private int idPaciente;
     private String Local;
     private String horario;
 
-    public ConsultaMarcada(String data, Nutricionista nutricionist, String local, String horario) {
+    public ConsultaMarcada(int idConsult,String data, Nutricionista nutricionist, String local, String horario) {
+        this.idConsult = idConsult;
         this.data = data;
         Nutricionist = nutricionist;
         Local = local;
         this.horario = horario;
+    }
+
+    public int getId() {
+        return idConsult;
+    }
+
+    public void setId(int idConsult) {
+        this.idConsult = idConsult;
     }
 
     public Nutricionista getNutricionist() {
@@ -39,7 +52,7 @@ public class ConsultaMarcada implements Serializable {
 
 
     public String getData() {
-        return data.toString();
+        return data;
     }
 
     public void setData(String data) {
@@ -71,9 +84,7 @@ public class ConsultaMarcada implements Serializable {
     }
 
     public String dataArray() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        String date = format.format(Date.parse(getData()));
-        return date + " " + getHorario();
+        return getData().replace('/', '-') + " " + getHorario();
     }
 
     public JSONObject array() {

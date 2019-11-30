@@ -5,16 +5,16 @@ import java.util.Date;
 
 public class Usuario implements Serializable {
 
-    private static int id;
+    private int id;
     private int foto;
     private String nome;
     private String email;
     private String senha;
     private String tipo;
-    private Date nascimento;
+    private String nascimento;
 
 
-    public Usuario(int Id, String nome, String email, String senha, String tipo, Date nascimento) {
+    public Usuario(int Id, String nome, String email, String senha, String tipo, String nascimento) {
         this.id = Id;
         this.nome = nome;
         this.email = email;
@@ -23,7 +23,7 @@ public class Usuario implements Serializable {
         this.nascimento = nascimento;
     }
 
-    public Usuario(String nome, String email, String senha, String tipo, Date nascimento) {
+    public Usuario(String nome, String email, String senha, String tipo, String nascimento) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
@@ -84,11 +84,11 @@ public class Usuario implements Serializable {
         this.foto = foto;
     }
 
-    public Date getNascimento() {
+    public String getNascimento() {
         return nascimento;
     }
 
-    public void setNascimento(Date nascimento) {
+    public void setNascimento(String nascimento) {
         this.nascimento = nascimento;
     }
 }

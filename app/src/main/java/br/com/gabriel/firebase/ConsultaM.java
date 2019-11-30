@@ -35,10 +35,10 @@ public class ConsultaM extends AppCompatActivity {
     }
 
     private void setInfo() {
-        ConsultaMarcarLocal.setText(getText(R.string.local) + ":" + consulta.getLocal());
-        ConsultaMarcarEsp.setText(getText(R.string.Esp) + ":" + consulta.getNutricionist().getSpecialization());
-        ConsultaMarcarData.setText(getText(R.string.Data) + ":" + consulta.getData());
-        ConsultaMarcarNutri.setText(getText(R.string.NomeCompleto) + ":" + consulta.getNutricionist().getNome());
+        ConsultaMarcarLocal.setText(getText(R.string.local) + ": " + consulta.getLocal());
+        ConsultaMarcarEsp.setText(getText(R.string.Esp) + ": " + consulta.getNutricionist().getSpecialization());
+        ConsultaMarcarData.setText(getText(R.string.Data) + " " + consulta.getData() + " " + consulta.getHorario());
+        ConsultaMarcarNutri.setText(getText(R.string.NomeCompleto) + ": " + consulta.getNutricionist().getNome());
     }
 
     private void iniciarCmponentes() {
@@ -57,13 +57,11 @@ public class ConsultaM extends AppCompatActivity {
                 consulta.array(),
                 (resultado) -> {
                     finish();
-                    Toast.makeText(this, "Consulta Marcada \n" + resultado, Toast.LENGTH_SHORT).show();
                 },
                 (excecao) -> {
-
                     Toast.makeText(
                             this,
-                            getString(R.string.connect_error) + consulta.array().toString(),
+                            getString(R.string.connect_error),
                             Toast.LENGTH_SHORT
                     ).show();
                     excecao.printStackTrace();

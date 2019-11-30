@@ -54,7 +54,7 @@ public class Register extends AppCompatActivity {
                 if (senha.length() > 0) {
                     if (paciente.isChecked()) {
                         Paciente usuario = new Paciente(nome.getText().toString(), email.getText().toString()
-                                , senha.getText().toString(), "patient", null);
+                                , senha.getText().toString(), null);
                         enviaApi(usuario);
 
                     } else if (nutricionista.isChecked()) {

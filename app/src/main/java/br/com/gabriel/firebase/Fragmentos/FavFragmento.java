@@ -54,9 +54,13 @@ public class FavFragmento extends Fragment {
         return view;
     }
 
-    
+    @Override
+    public void onStart() {
+        super.onStart();
+        enviaApi(user.getId()+"");
+    }
 
-    private List<ConsultaMarcada> enviaApi(String palavra) {
+    private void enviaApi(String palavra) {
         String url = getString(R.string.web_service_url) + "/consult/patient/" + palavra;
         requestQueue = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
         JsonArrayRequest req = new JsonArrayRequest(
@@ -69,6 +73,7 @@ public class FavFragmento extends Fragment {
                         JSONObject iesimo;
                         for (int i = 0; i < resultado.length(); i++) {
                             iesimo = resultado.getJSONObject(i);
+                            int idCons = iesimo.getInt("idconsult");
                             String place = iesimo.getString("place");
                             String date = iesimo.getString("date");
                             JSONObject a = iesimo.getJSONObject("nutritionist");
@@ -79,9 +84,8 @@ public class FavFragmento extends Fragment {
                             String niver = a.getString("birthday");
                             String esp = a.getString("specialization");
                             int crn = a.getInt("crn");
-                            Nutricionista n = new Nutricionista(idUser, name, email, pwd, null, crn, esp);
-                            dados.add(new ConsultaMarcada(date, n, place, null));
-                            Toast.makeText(getContext(), "Bateu", Toast.LENGTH_SHORT).show();
+                            Nutricionista n = new Nutricionista(idUser, name, email, pwd, niver, crn, esp);
+                            dados.add(new ConsultaMarcada(idCons,date, n, place, null));
                         }
                         iniciaRecyclerView(dados);
                     } catch (JSONException e) {
@@ -99,7 +103,6 @@ public class FavFragmento extends Fragment {
                 }
         );
         requestQueue.add(req);
-        return dados;
     }
 
     private void iniciaRecyclerView(List<ConsultaMarcada> dados) {

@@ -49,8 +49,8 @@ public class MarcarConsulta extends AppCompatActivity {
         listView.setOnItemClickListener((parent, view, position, id) -> {
             //Seu codigo aqui
             Horario h = consulta.getHorarios().get(position);
-            ConsultaMarcada c = new ConsultaMarcada(consulta.getData().toString(), consulta.getNutricionista(),
-                    h.getLocal(), h.getHorario().toString(), Integer.parseInt(result));
+            ConsultaMarcada c = new ConsultaMarcada(consulta.getData(), consulta.getNutricionista(),
+                    "Vila Lobos 123", h.getHorario(), Integer.parseInt(result));
             Toast.makeText(this, consulta.getNutricionista().getId() + "", Toast.LENGTH_SHORT).show();
             Intent i = new Intent(this, ConsultaM.class);
             i.putExtra("Consulta", c);

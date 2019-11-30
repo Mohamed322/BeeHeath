@@ -14,7 +14,7 @@ import br.com.gabriel.firebase.model.Nutricionista;
 
 public class PerfilNutricionista extends AppCompatActivity {
     private ImageView foto;
-    private TextView nome, espec, emal, ender;
+    private TextView nome, espec, ender;
     private Nutricionista n;
 
     @Override
@@ -33,15 +33,14 @@ public class PerfilNutricionista extends AppCompatActivity {
         n = (Nutricionista) getIntent().getSerializableExtra("Nutri");
         assert n != null;
         foto.setImageResource(n.getFoto());
-        nome.setText(getText(R.string.NomeCompleto)+": "+n.getNome());
-        espec.setText(getText(R.string.Esp)+": "+n.getSpecialization());
-        emal.setText(getText(R.string.Email) +": "+n.getEmail());
+        nome.setText(getText(R.string.NomeCompleto) + ": " + n.getNome());
+        espec.setText(getText(R.string.Esp) + ": " + n.getSpecialization());
     }
 
     public void marcarConsulta(View view) {
         Intent i = new Intent(this, Consultas.class);
-        i.putExtra("Nutri",n);
+        i.putExtra("Nutri", n);
         startActivity(i);
-        Toast.makeText(view.getContext(),"Agendar Consultas",Toast.LENGTH_LONG).show();
+        Toast.makeText(view.getContext(), "Agendar Consultas", Toast.LENGTH_LONG).show();
     }
 }

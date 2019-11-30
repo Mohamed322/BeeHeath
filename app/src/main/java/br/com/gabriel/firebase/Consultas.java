@@ -28,7 +28,6 @@ public class Consultas extends AppCompatActivity {
     private RecyclerView lstDados;
     private Nutricionista n;
     private ConsutaAdapter consutaAdapter;
-    private List<Nutricionista> dadosNutri;
     private List<Consulta> dadosConsulta;
     private ImageView consFoto;
     private TextView consNome, consEsp;
@@ -63,27 +62,20 @@ public class Consultas extends AppCompatActivity {
 
     private List<Consulta> todasConsultas() {
         return new ArrayList<>(Arrays.asList(
-                new Consulta(todosHorarios(), "12/04/2019",n),
-                new Consulta(todosHorarios(), "09/08/2019",n),
-                new Consulta(todosHorarios(), "01/01/2019",n),
-                new Consulta(todosHorarios(), "12/02/2019",n)
+                new Consulta(todosHorarios(), "2019/12/04",n),
+                new Consulta(todosHorarios(), "2019/09/12",n),
+                new Consulta(todosHorarios(), "2019/01/11",n),
+                new Consulta(todosHorarios(), "2019/02/12",n)
         ));
     }
 
 
     private List<Horario> todosHorarios(){
-        Random r = new Random();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:");
-        try {
-            return new ArrayList<>(Arrays.asList(
-                    new Horario("Rua Joaquim Moraes", dateFormat.parse(new Time(r.nextInt()).toString()).toString()),
-                    new Horario("Rua Vital Brasil", dateFormat.parse(new Time(r.nextInt()).toString()).toString()),
-                    new Horario("Rua dos Bobos", dateFormat.parse(new Time(r.nextInt()).toString()).toString())
-            ));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return new ArrayList<>(Arrays.asList(
+                new Horario("08:00:00"),
+                new Horario("10:00:00"),
+                new Horario("12:00:00")
+        ));
     }
 
 }

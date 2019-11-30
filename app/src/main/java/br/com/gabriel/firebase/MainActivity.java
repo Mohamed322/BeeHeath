@@ -93,9 +93,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         } else {
             Paciente p = new Paciente();
             p.setEmail(login.getText().toString());
-            p.setSenha(login.getText().toString());
-            enviaApi(p,false);
-            finish();
+            p.setSenha(senha.getText().toString());
+            p.setTipo("patient");
+            enviaApi(p, false);
         }
     }
 
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Paciente paciente = new Paciente(account.getDisplayName(),
-                                account.getEmail(), account.getId(), "patient", null);
+                                account.getEmail(), account.getId(), null);
                         enviaApi(paciente, true);
                     } else {
                         alert("Falha na autenticação");
@@ -137,11 +137,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 (resultado) -> {
                     try {
                         paciente.setId(resultado.getInt("iduser"));
+                        paciente.setNome(resultado.getString("fullname"));
+                        paciente.setNascimento(resultado.getString("birthday"));
+                        entrar(paciente);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    entrar(paciente);
-                    finish();
+
                 },
                 (excecao) -> {
                     if (excecao.networkResponse.statusCode == 404) {
@@ -150,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         } else {
                             alert("Usuario não encontrado");
                         }
-                    }else {
+                    } else {
                         alert(getString(R.string.connect_error));
                         excecao.printStackTrace();
                     }

@@ -77,7 +77,7 @@ public class ConsutaAdapter extends RecyclerView.Adapter<ConsutaAdapter.ViewHold
                     Consulta consulta = dados.get(getLayoutPosition());
                     Intent intent = new Intent(context, MarcarConsulta.class);
                     intent.putExtra("Consultas", consulta);
-                    Toast.makeText(context, consulta.getData().toString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, consulta.getData(),Toast.LENGTH_LONG).show();
                     context.startActivity(intent);
                 }
             });

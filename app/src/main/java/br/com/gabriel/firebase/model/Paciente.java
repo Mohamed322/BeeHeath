@@ -4,7 +4,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class Paciente extends Usuario implements Serializable {
 
@@ -12,8 +11,8 @@ public class Paciente extends Usuario implements Serializable {
     private Double height;
     private String description;
 
-    public Paciente(String nome, String email, String senha, String tipo, Date nascimento, Double weight, Double height, String description) {
-        super(nome, email, senha, tipo, nascimento);
+    public Paciente(String nome, String email, String senha, String nascimento, Double weight, Double height, String description) {
+        super(nome, email, senha, "patient", nascimento);
         this.weight = weight;
         this.height = height;
         this.description = description;
@@ -48,22 +47,23 @@ public class Paciente extends Usuario implements Serializable {
     }
 
 
-    public Paciente(int id,String nome, String email, String senha, String tipo, Date nascimento) {
-        super(id,nome, email, senha, tipo, nascimento);
+    public Paciente(int id,String nome, String email, String senha, String nascimento) {
+        super(id,nome, email, senha, "patient", nascimento);
     }
 
-    public Paciente(String nome, String email, String senha, String tipo, Date nascimento) {
-        super(nome, email, senha, tipo, nascimento);
+    public Paciente(String nome, String email, String senha, String nascimento) {
+        super(nome, email, senha, "patient", nascimento);
     }
 
     public JSONObject json(){
         JSONObject json = new JSONObject();
         try {
-            json.put("iduser",10);
+            json.put("iduser",getId());
             json.put("fullname", getNome());
             json.put("email", getEmail());
             json.put("password", getSenha());
             json.put("type", getTipo());
+            json.put("birthday",getNascimento());
         } catch (JSONException e) {
             e.printStackTrace();
         }
