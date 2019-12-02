@@ -84,7 +84,7 @@ public class ConsultaMarcada implements Serializable {
     }
 
     public String dataArray() {
-        return getData().replace('/', '-') + " " + getHorario();
+        return getData() + " " + getHorario();
     }
 
     public JSONObject array() {

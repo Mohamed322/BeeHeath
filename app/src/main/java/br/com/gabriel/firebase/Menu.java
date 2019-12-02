@@ -92,7 +92,9 @@ public class Menu extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         Intent i = new Intent(this,Configuracoes.class);
+        boolean g = bundle.getBoolean("Google");
         i.putExtra("Paciente",user);
+        i.putExtra("Google",g);
         startActivityForResult(i,1);
         return true;
     }

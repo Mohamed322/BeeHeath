@@ -29,6 +29,9 @@ public class Configuracoes extends AppCompatActivity {
 
         alterarPerfil.setOnClickListener(v -> {
             Intent i = new Intent(this,AlterarPaciente.class);
+            Bundle bundle = getIntent().getExtras();
+            boolean g = bundle.getBoolean("Google");
+            i.putExtra("Google",g);
             i.putExtra("Paciente",paciente);
             startActivity(i);
         });

@@ -27,7 +27,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import br.com.gabriel.firebase.model.Paciente;
 
@@ -107,9 +106,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
     }
 
-    private void entrar(Paciente user) {
+    private void entrar(Paciente user, boolean google) {
         Intent intent = new Intent(this, Menu.class);
         intent.putExtra("Paciente", user);
+        intent.putExtra("Google",google);
         startActivity(intent);
         mFirebaseAuth.signOut();
     }
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         paciente.setId(resultado.getInt("iduser"));
                         paciente.setNome(resultado.getString("fullname"));
                         paciente.setNascimento(resultado.getString("birthday"));
-                        entrar(paciente);
+                        entrar(paciente,google);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 (excecao) -> {
                     if (excecao.networkResponse.statusCode == 404) {
                         if (google) {
-                            enviaApiRegistrer(paciente);
+                            enviaApiRegistrer(paciente,google);
                         } else {
                             alert("Usuario não encontrado");
                         }
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         requestQueue.add(req);
     }
 
-    public void enviaApiRegistrer(Paciente paciente) {
+    public void enviaApiRegistrer(Paciente paciente, boolean google) {
         String url = getString(
                 R.string.web_service_url
         ) + "/user/register/";
@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     try {
                         int idUser = resultado.getInt("iduser");
                         paciente.setId(idUser);
-                        entrar(paciente);
+                        entrar(paciente, google);
                         finish();
                     } catch (JSONException e) {
                         alert("Erro na resposta2");

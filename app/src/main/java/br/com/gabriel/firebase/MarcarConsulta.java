@@ -1,5 +1,6 @@
 package br.com.gabriel.firebase;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -51,14 +52,18 @@ public class MarcarConsulta extends AppCompatActivity {
             Horario h = consulta.getHorarios().get(position);
             ConsultaMarcada c = new ConsultaMarcada(consulta.getData(), consulta.getNutricionista(),
                     consulta.getNutricionista().getLocal(), h.getHorario(), Integer.parseInt(result));
-            Toast.makeText(this, consulta.getNutricionista().getId() + "", Toast.LENGTH_SHORT).show();
             Intent i = new Intent(this, ConsultaM.class);
             i.putExtra("Consulta", c);
-            startActivity(i);
-            finish();
+            startActivityForResult(i,1);
         });
         ArrayAdapter<Horario> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, consulta.getHorarios());
         listView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        finish();
     }
 
     public void iniciarComponentes() {

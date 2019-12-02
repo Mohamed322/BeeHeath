@@ -18,22 +18,15 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Array;
-import java.sql.Time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
-
-import javax.xml.transform.Result;
 
 import br.com.gabriel.firebase.Adapter.ConsutaAdapter;
 import br.com.gabriel.firebase.model.Consulta;
-import br.com.gabriel.firebase.model.ConsultaMarcada;
 import br.com.gabriel.firebase.model.Horario;
 import br.com.gabriel.firebase.model.Nutricionista;
 
@@ -42,9 +35,8 @@ public class Consultas extends AppCompatActivity {
     private RecyclerView lstDados;
     private Nutricionista n;
     private ConsutaAdapter consutaAdapter;
-    private List<Consulta> dadosConsulta;
     private ImageView consFoto;
-    private TextView consNome, consEsp,consEnd;
+    private TextView consNome, consEsp, consEnd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,15 +46,19 @@ public class Consultas extends AppCompatActivity {
         n = (Nutricionista) intent.getSerializableExtra("Nutri");
         iniciarComponentes();
         setInfo();
-        iniciaRecyclerView(lstDados);
-
+        enviaApi();
     }
 
-    private void iniciaRecyclerView(RecyclerView lstDados) {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        enviaApi();
+    }
+
+    private void iniciaRecyclerView(ArrayList h) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         lstDados.setLayoutManager(linearLayoutManager);
-        dadosConsulta = todasConsultas();
-        consutaAdapter = new ConsutaAdapter(dadosConsulta);
+        consutaAdapter = new ConsutaAdapter(h);
         lstDados.setAdapter(consutaAdapter);
     }
 
@@ -90,7 +86,8 @@ public class Consultas extends AppCompatActivity {
                             String date = iesimo.getString("date");
                             dados.add(date);
                         }
-                        comparar(dados);
+                        ArrayList h =  comparar(dados);
+                        iniciaRecyclerView(h);
                     } catch (JSONException e) {
                         Toast.makeText(this, "Erro na resposta", Toast.LENGTH_SHORT).show();
                     }
@@ -108,12 +105,28 @@ public class Consultas extends AppCompatActivity {
         requestQueue.add(req);
     }
 
-    private void comparar(ArrayList<String> dados) {
+    private ArrayList comparar(ArrayList<String> dados) {
+        ArrayList consulta = (ArrayList<Consulta>) todasConsultas();
+        for(String s:dados) {
+            for (int i = 0; i < consulta.size(); i++) {
+                Consulta a = (Consulta) consulta.get(i);
+                for (int j = 0; j < a.getHorarios().size();j++) {
+                    Horario h = a.getHorarios().get(j);
+                    String DH = a.getData() + " " + h.getHorario();
+                    if (s.equals(DH))
+                        a.getHorarios().remove(h);
+                }
+                if(a.getHorarios().isEmpty()){
+                    consulta.remove(a);
+                }
+            }
+        }
 
+        return consulta;
     }
 
     private void iniciarComponentes() {
-        consFoto  = findViewById(R.id.consFoto);
+        consFoto = findViewById(R.id.consFoto);
         consEsp = findViewById(R.id.consEsp);
         consNome = findViewById(R.id.consNome);
         lstDados = findViewById(R.id.consList);
@@ -121,20 +134,27 @@ public class Consultas extends AppCompatActivity {
     }
 
     private List<Consulta> todasConsultas() {
-        return new ArrayList<>(Arrays.asList(
-                new Consulta(todosHorarios(), "2019/12/04",n),
-                new Consulta(todosHorarios(), "2019/09/12",n),
-                new Consulta(todosHorarios(), "2019/01/11",n),
-                new Consulta(todosHorarios(), "2019/02/12",n)
-        ));
+        ArrayList<Consulta> a =  new ArrayList<>();
+        for(int i = 0; i < 6;i++){
+            Calendar hoje = Calendar.getInstance();
+            hoje.add(Calendar.DATE,i);
+            String data = DateFormat.getDateInstance(DateFormat.DATE_FIELD).format(hoje.getTime());
+            a.add(new Consulta(todosHorarios(), data, n));
+            hoje.clear();
+        }
+        return a;
     }
 
 
-    private List<Horario> todosHorarios(){
+    private List<Horario> todosHorarios() {
         return new ArrayList<>(Arrays.asList(
                 new Horario("08:00:00"),
+                new Horario("09:00:00"),
                 new Horario("10:00:00"),
-                new Horario("12:00:00")
+                new Horario("11:00:00"),
+                new Horario("13:00:00"),
+                new Horario("14:00:00"),
+                new Horario("15:00:00")
         ));
     }
 
