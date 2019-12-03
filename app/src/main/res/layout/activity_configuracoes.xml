@@ -28,29 +28,40 @@
                 android:id="@+id/PerfilNome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/PerfilEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textSize="18sp" />
         </LinearLayout>
+
     </LinearLayout>
 
-    <Button
-        android:id="@+id/alterPerfil"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@null"
-        android:text="@string/AlterarDados" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="25dp"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/singout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/LogOut"
-        android:background="@null"/>
+        <Button
+            android:id="@+id/alterPerfil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@null"
+            android:text="@string/AlterarDados" />
+
+        <Button
+            android:id="@+id/singout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:text="@string/LogOut" />
+
+    </LinearLayout>
 
 </LinearLayout>

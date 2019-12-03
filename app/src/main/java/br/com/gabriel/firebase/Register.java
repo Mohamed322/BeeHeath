@@ -95,7 +95,6 @@ public class Register extends AppCompatActivity {
                     try {
                         int idUser = resultado.getInt("iduser");
                         paciente.setId(idUser);
-                        Toast.makeText(this, paciente.toString(), Toast.LENGTH_LONG).show();
                         entrar(paciente);
                     } catch (JSONException e) {
                         Toast.makeText(this, "Erro na resposta", Toast.LENGTH_SHORT).show();

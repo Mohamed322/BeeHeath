@@ -56,6 +56,7 @@ public class ConsultaM extends AppCompatActivity {
                 url,
                 consulta.array(),
                 (resultado) -> {
+                    Toast.makeText(this,"Consulta Realizada Com Sucesso",Toast.LENGTH_LONG).show();
                     finish();
                 },
                 (excecao) -> {

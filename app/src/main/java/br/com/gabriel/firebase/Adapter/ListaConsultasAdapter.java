@@ -11,6 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 
 import br.com.gabriel.firebase.ConsultasPaciente;
@@ -40,16 +42,21 @@ public class ListaConsultasAdapter extends RecyclerView.Adapter<ListaConsultasAd
         return holderCliente;
     }
 
+    public String dataF(String data){
+        String[] a = data.split("/");
+        return a[1]+"/"+a[0]+"/"+a[2];
+    }
 
     @Override
     public void onBindViewHolder(@NonNull ListaConsultasAdapter.ViewHolderCliente holder, int position) {
 
         if (dados != null && dados.size() > 0) {
             ConsultaMarcada consultaMarcada = dados.get(position);
-
+            Date a = new Date(dataF(consultaMarcada.getData()));
+            String b = DateFormat.getDateInstance(DateFormat.FULL).format(a);
             //Passando os dados para a View
             holder.LC_Nutricionista.setText(consultaMarcada.getNutricionist().getNome());
-            holder.LC_Data.setText(consultaMarcada.getData());
+            holder.LC_Data.setText(b);
             holder.LC_Local.setText(consultaMarcada.getLocal());
         }
     }
@@ -82,7 +89,6 @@ public class ListaConsultasAdapter extends RecyclerView.Adapter<ListaConsultasAd
                     intent.putExtra("Consulta", consultaMarcada);
                     context.startActivity(intent);
 
-                    Toast.makeText(context,"Mostrar Consultas",Toast.LENGTH_LONG).show();
                 }
             });
         }

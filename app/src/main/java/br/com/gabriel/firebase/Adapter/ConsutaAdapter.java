@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 
 import br.com.gabriel.firebase.MarcarConsulta;
@@ -41,14 +42,19 @@ public class ConsutaAdapter extends RecyclerView.Adapter<ConsutaAdapter.ViewHold
         return holderCliente;
     }
 
-
+    public String dataF(String data){
+        String[] a = data.split("/");
+        return a[1]+"/"+a[0]+"/"+a[2];
+    }
     @Override
     public void onBindViewHolder(@NonNull ViewHolderCliente holder, int position) {
         if (dados != null && dados.size() > 0) {
             Consulta consulta = dados.get(position);
 
             //Passando os dados para a View
-            holder.txtDataConsulta.setText(consulta.getData());
+            Date a = new Date(dataF(consulta.getData()));
+            String b = DateFormat.getDateInstance(DateFormat.DEFAULT).format(a);
+            holder.txtDataConsulta.setText(b);
             holder.txtNConsulta.setText("vagas: "+consulta.getHorario() + " ");
         }
     }
@@ -77,7 +83,6 @@ public class ConsutaAdapter extends RecyclerView.Adapter<ConsutaAdapter.ViewHold
                     Consulta consulta = dados.get(getLayoutPosition());
                     Intent intent = new Intent(context, MarcarConsulta.class);
                     intent.putExtra("Consultas", consulta);
-                    Toast.makeText(context, consulta.getData(),Toast.LENGTH_LONG).show();
                     context.startActivity(intent);
                 }
             });

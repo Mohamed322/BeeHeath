@@ -15,6 +15,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 import br.com.gabriel.firebase.model.Consulta;
 import br.com.gabriel.firebase.model.ConsultaMarcada;
 import br.com.gabriel.firebase.model.Horario;
@@ -41,11 +44,18 @@ public class MarcarConsulta extends AppCompatActivity {
         setarValores();
     }
 
+    public String dataF(String data) {
+        String[] a = data.split("/");
+        return a[1] + "/" + a[0] + "/" + a[2];
+    }
+
     public void setarValores() {
         McFoto.setImageResource(consulta.getNutricionista().getFoto());
         txtMcNutri.setText(txtMcNutri.getText() + ":" + consulta.getNutricionista().getNome());
         txtMcEsp.setText(txtMcEsp.getText() + ":" + consulta.getNutricionista().getSpecialization());
-        txtMcData.setText(consulta.getData());
+        Date a = new Date(dataF(consulta.getData()));
+        String b = DateFormat.getDateInstance(DateFormat.FULL).format(a);
+        txtMcData.setText(b);
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
             //Seu codigo aqui
@@ -54,7 +64,7 @@ public class MarcarConsulta extends AppCompatActivity {
                     consulta.getNutricionista().getLocal(), h.getHorario(), Integer.parseInt(result));
             Intent i = new Intent(this, ConsultaM.class);
             i.putExtra("Consulta", c);
-            startActivityForResult(i,1);
+            startActivityForResult(i, 1);
         });
         ArrayAdapter<Horario> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, consulta.getHorarios());
         listView.setAdapter(adapter);

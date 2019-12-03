@@ -35,8 +35,8 @@ public class Menu extends AppCompatActivity {
         setContentView(R.layout.menu);
         bundle = getIntent().getExtras();
         user =(Paciente) bundle.getSerializable("Paciente");
+        alert(user.getSenha());
         docPreferences(user);
-        alert(user.getNome());
         iniciarComponentes();
     }
 

@@ -42,6 +42,5 @@ public class PerfilNutricionista extends AppCompatActivity {
         Intent i = new Intent(this, Consultas.class);
         i.putExtra("Nutri", n);
         startActivityForResult(i,1);
-        Toast.makeText(view.getContext(), "Agendar Consultas", Toast.LENGTH_LONG).show();
     }
 }

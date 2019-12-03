@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Paciente paciente = new Paciente(account.getDisplayName(),
-                                account.getEmail(), account.getId()+"google", null);
+                                account.getEmail(), account.getId(), null);
                         enviaApi(paciente, true);
                     } else {
                         alert("Falha na autenticação");
@@ -152,7 +152,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
                 },
                 (excecao) -> {
                     if (excecao.networkResponse.statusCode == 404) {
